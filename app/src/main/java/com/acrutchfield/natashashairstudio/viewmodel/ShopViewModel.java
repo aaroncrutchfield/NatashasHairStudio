@@ -1,6 +1,6 @@
 package com.acrutchfield.natashashairstudio.viewmodel;
 
-import android.arch.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModel;
 
 public class ShopViewModel extends ViewModel {
     // TODO: Implement the ViewModel
