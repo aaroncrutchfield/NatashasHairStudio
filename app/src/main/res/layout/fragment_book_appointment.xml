@@ -3,13 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="24dp"
-    android:layout_marginEnd="24dp"
+    android:background="@drawable/background"
     tools:context=".ui.BookAppointmentFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <WebView
+        android:id="@+id/wv_book_appointment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
 
 </FrameLayout>

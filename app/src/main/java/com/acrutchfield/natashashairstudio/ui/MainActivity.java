@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(ShopFragment.newInstance());
                     return true;
                 case R.id.navigation_book:
-                    replaceFragment(BookAppointmentFragment.newInstance(null, null));
+                    replaceFragment(BookAppointmentFragment.newInstance(urlString));
                     return true;
                 case R.id.navigation_review:
                     replaceFragment(ReviewFragment.newInstance());
@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
+    private String urlString = "https://app.acuityscheduling.com/schedule.php?owner=11362345";
 
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
