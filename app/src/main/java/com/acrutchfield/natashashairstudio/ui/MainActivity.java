@@ -1,8 +1,8 @@
 package com.acrutchfield.natashashairstudio.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.acrutchfield.natashashairstudio.R;
@@ -10,16 +10,15 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Arrays;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,10 +28,8 @@ public class MainActivity extends AppCompatActivity {
     // TODO: 2/7/19 Find a way to show the logo by default if the user isn't signed in
     private static final int REQUEST_SIGN_IN = 0;
     public static final String SIGNED_OUT = "Signed Out";
-    public static final String WELCOME_BACK = "Welcome Back!";
-    public static final String LOGIN_FAILED = "Login failed!";
+    private TextView mTextMessage;
     private FragmentManager fragmentManager;
-    FirebaseAuth auth;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -40,36 +37,43 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
+                case R.id.navigation_shop:
+                    replaceFragment(ShopFragment.newInstance());
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_book:
+                    replaceFragment(BookAppointmentFragment.newInstance(urlString));
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_review:
+                    replaceFragment(ReviewFragment.newInstance());
+                    return true;
+                case R.id.navigation_social:
+                    replaceFragment(SocialFragment.newInstance(null, null));
                     return true;
             }
             return false;
         }
     };
+    private String urlString = "https://app.acuityscheduling.com/schedule.php?owner=11362345";
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.commit();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView navigation = findViewById(R.id.navigation);
+        mTextMessage = (TextView) findViewById(R.id.message);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         fragmentManager = getSupportFragmentManager();
-
-        // Check if the user is already logged in
-        auth = FirebaseAuth.getInstance();
-        if (auth.getCurrentUser() == null) {
-            signIn();
-        } else {
-            Toast.makeText(this, WELCOME_BACK, Toast.LENGTH_SHORT).show();
-        }
     }
 
+    // TODO: 2/7/19 Setup signing in with Email
     private void signIn() {
         List<AuthUI.IdpConfig> providers = Arrays.asList(
                 new AuthUI.IdpConfig.GoogleBuilder().build()
@@ -97,23 +101,4 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQUEST_SIGN_IN) {
-
-            if (resultCode == RESULT_OK) {
-                FirebaseUser user = auth.getCurrentUser();
-                String welcomeUser = "Welcome " + user.getDisplayName() + "!";
-                displayMessage(welcomeUser);
-            } else {
-                displayMessage(LOGIN_FAILED);
-            }
-        }
-    }
-
-    private void displayMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
 }
