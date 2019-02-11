@@ -1,20 +1,32 @@
 package com.acrutchfield.natashashairstudio.ui;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.acrutchfield.natashashairstudio.R;
+import com.acrutchfield.natashashairstudio.model.ProductCollection;
 import com.acrutchfield.natashashairstudio.viewmodel.ShopViewModel;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ShopFragment extends Fragment {
 
     private ShopViewModel mViewModel;
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference hairMetaRef = db.collection("/HAIR_COLLECTION_META_DATA");
+    private ProductCollectionAdapter adapter;
 
     public static ShopFragment newInstance() {
         return new ShopFragment();
@@ -23,7 +35,10 @@ public class ShopFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_shop, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_shop, container, false);
+        setupRecyclerView(view);
+        return view;
     }
 
     @Override
@@ -31,6 +46,32 @@ public class ShopFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(ShopViewModel.class);
         // TODO: Use the ViewModel
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
+
+    private void setupRecyclerView(View view) {
+        Query query = hairMetaRef.orderBy("title");
+
+        FirestoreRecyclerOptions<ProductCollection> options = new FirestoreRecyclerOptions.Builder<ProductCollection>()
+                .setQuery(query, ProductCollection.class)
+                .build();
+
+        adapter = new ProductCollectionAdapter(options);
+        RecyclerView recyclerView = view.findViewById(R.id.rv_product_collections);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        recyclerView.setAdapter(adapter);
     }
 
 }
