@@ -2,20 +2,17 @@ package com.acrutchfield.natashashairstudio.ui;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.acrutchfield.natashashairstudio.R;
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Arrays;
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -36,27 +33,23 @@ public class MainActivity extends AppCompatActivity {
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_shop:
-                    replaceFragment(ShopFragment.newInstance());
-                    return true;
-                case R.id.navigation_book:
-                    replaceFragment(BookAppointmentFragment.newInstance(URL_STRING));
-                    return true;
-                case R.id.navigation_review:
-                    replaceFragment(ReviewFragment.newInstance());
-                    return true;
-                case R.id.navigation_social:
-                    replaceFragment(SocialFragment.newInstance(null, null));
-                    return true;
-            }
-            return false;
-        }
-    };
+            = item -> {
+                switch (item.getItemId()) {
+                    case R.id.navigation_shop:
+                        replaceFragment(ShopFragment.newInstance());
+                        return true;
+                    case R.id.navigation_book:
+                        replaceFragment(BookAppointmentFragment.newInstance(URL_STRING));
+                        return true;
+                    case R.id.navigation_review:
+                        replaceFragment(ReviewFragment.newInstance());
+                        return true;
+                    case R.id.navigation_social:
+                        replaceFragment(SocialFragment.newInstance(null, null));
+                        return true;
+                }
+                return false;
+            };
 
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -68,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
         navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -80,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             navigation.setSelectedItemId(R.id.navigation_shop);
         }
+
     }
 
     @Override
@@ -108,12 +103,8 @@ public class MainActivity extends AppCompatActivity {
     private void signOut() {
         AuthUI.getInstance()
                 .signOut(this)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(MainActivity.this, SIGNED_OUT, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                .addOnCompleteListener(task ->
+                        Toast.makeText(MainActivity.this, SIGNED_OUT, Toast.LENGTH_SHORT).show());
     }
 
 }
