@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    android:orientation="vertical">
+    style="@style/cardview_store">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,17 +11,12 @@
 
         <ImageView
             android:id="@+id/iv_collection_image"
-            android:layout_width="192dp"
-            android:layout_height="240dp" />
+            style="@style/imageview_store" />
 
         <TextView
             android:id="@+id/tv_collection_title"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:paddingStart="16dp"
-            android:layout_marginBottom="16dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            tools:text="4x4 Lace Closure" />
+            tools:text="4x4 Lace Closure"
+            style="@style/title_store" />
 
     </LinearLayout>
 
