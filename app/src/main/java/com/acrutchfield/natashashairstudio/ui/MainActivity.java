@@ -1,8 +1,8 @@
 package com.acrutchfield.natashashairstudio.ui;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.acrutchfield.natashashairstudio.R;
@@ -28,8 +28,12 @@ public class MainActivity extends AppCompatActivity {
     // TODO: 2/7/19 Find a way to show the logo by default if the user isn't signed in
     private static final int REQUEST_SIGN_IN = 0;
     public static final String SIGNED_OUT = "Signed Out";
-    private TextView mTextMessage;
+    public static final String SELECTED_FRAGMENT = "selected_fragment";
+    private static final String URL_STRING = "https://app.acuityscheduling.com/schedule.php?owner=11362345";
+
     private FragmentManager fragmentManager;
+    private BottomNavigationView navigation;
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -41,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(ShopFragment.newInstance());
                     return true;
                 case R.id.navigation_book:
-                    replaceFragment(BookAppointmentFragment.newInstance(urlString));
+                    replaceFragment(BookAppointmentFragment.newInstance(URL_STRING));
                     return true;
                 case R.id.navigation_review:
                     replaceFragment(ReviewFragment.newInstance());
@@ -53,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
-    private String urlString = "https://app.acuityscheduling.com/schedule.php?owner=11362345";
 
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -66,11 +69,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         fragmentManager = getSupportFragmentManager();
+
+        if (savedInstanceState != null) {
+            int selectedFragment = savedInstanceState.getInt(SELECTED_FRAGMENT);
+            navigation.setSelectedItemId(selectedFragment);
+        } else {
+            navigation.setSelectedItemId(R.id.navigation_shop);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putInt(SELECTED_FRAGMENT, navigation.getSelectedItemId());
     }
 
     // TODO: 2/7/19 Setup signing in with Email
