@@ -1,5 +1,6 @@
 package com.acrutchfield.natashashairstudio.ui;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import com.acrutchfield.natashashairstudio.R;
 import com.acrutchfield.natashashairstudio.model.Product;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,8 +20,14 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ProductAdapter extends FirestoreRecyclerAdapter<Product, ProductAdapter.ProductHolder> {
 
 
-    public ProductAdapter(@NonNull FirestoreRecyclerOptions<Product> options) {
+    private String collectionTitle;
+    private Context context;
+
+    ProductAdapter(@NonNull FirestoreRecyclerOptions<Product> options,
+                   String collectionTitle, Context context) {
         super(options);
+        this.collectionTitle = collectionTitle;
+        this.context = context;
     }
 
     @Override
@@ -35,13 +44,16 @@ public class ProductAdapter extends FirestoreRecyclerAdapter<Product, ProductAda
         return new ProductHolder(view);
     }
 
-    public class ProductHolder extends RecyclerView.ViewHolder {
+    class ProductHolder extends RecyclerView.ViewHolder {
+
+        final String COLLECTION_FOLDER = "HairCollections/" + collectionTitle + "/";
+        FirebaseStorage storage = FirebaseStorage.getInstance();
 
         ImageView ivProductImage;
         TextView tvProductTitle;
         TextView tvProductPriceRange;
 
-        public ProductHolder(@NonNull View itemView) {
+        ProductHolder(@NonNull View itemView) {
             super(itemView);
 
             ivProductImage = itemView.findViewById(R.id.iv_product_image);
@@ -50,8 +62,16 @@ public class ProductAdapter extends FirestoreRecyclerAdapter<Product, ProductAda
         }
 
         private void onBindProduct(Product product) {
-            tvProductTitle.setText(product.getTitle());
+            String productTitle = product.getTitle();
+            tvProductTitle.setText(productTitle);
             tvProductPriceRange.setText(product.getPriceRange());
+
+            String fileRef = COLLECTION_FOLDER + productTitle + ".png";
+            StorageReference storageRef = storage.getReference(fileRef);
+
+            GlideApp.with(context)
+                    .load(storageRef)
+                    .into(ivProductImage);
         }
     }
 

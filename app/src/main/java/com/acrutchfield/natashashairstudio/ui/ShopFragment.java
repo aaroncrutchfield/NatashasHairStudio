@@ -23,13 +23,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ShopFragment extends Fragment implements ProductCollectionAdapter.CollectionInteractionListener {
 
+    private static final String COLLECTION_TITLE = "collection_title";
     private ShopViewModel mViewModel;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference hairMetaRef = db.collection("/HAIR_COLLECTION_META_DATA");
     private ProductCollectionAdapter adapter;
 
-    public static ShopFragment newInstance() {
+    static ShopFragment newInstance() {
         return new ShopFragment();
     }
 
@@ -68,7 +69,7 @@ public class ShopFragment extends Fragment implements ProductCollectionAdapter.C
                 .setQuery(query, ProductCollection.class)
                 .build();
 
-        adapter = new ProductCollectionAdapter(options, this);
+        adapter = new ProductCollectionAdapter(options, this, getContext());
         RecyclerView recyclerView = view.findViewById(R.id.rv_product_collections);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerView.setAdapter(adapter);
@@ -77,7 +78,7 @@ public class ShopFragment extends Fragment implements ProductCollectionAdapter.C
     @Override
     public void onCollectionInteraction(String productTitle) {
         Intent intent = new Intent(getContext(), CollectionDetailsActivity.class);
-        intent.putExtra("product_title", productTitle);
+        intent.putExtra(COLLECTION_TITLE, productTitle);
         startActivity(intent);
     }
 }

@@ -1,5 +1,6 @@
 package com.acrutchfield.natashashairstudio.ui;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import com.acrutchfield.natashashairstudio.R;
 import com.acrutchfield.natashashairstudio.model.ProductCollection;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,15 +20,18 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ProductCollectionAdapter extends FirestoreRecyclerAdapter<ProductCollection, ProductCollectionAdapter.ProductCollectionHolder> {
 
     private final CollectionInteractionListener listener;
+    private final Context context;
 
     interface CollectionInteractionListener {
         void onCollectionInteraction(String productTitle);
     }
 
-    public ProductCollectionAdapter(@NonNull FirestoreRecyclerOptions<ProductCollection> options,
-                                    CollectionInteractionListener listener) {
+    ProductCollectionAdapter(@NonNull FirestoreRecyclerOptions<ProductCollection> options,
+                             CollectionInteractionListener listener,
+                             Context context) {
         super(options);
         this.listener = listener;
+        this.context = context;
     }
 
     @Override
@@ -42,28 +48,38 @@ public class ProductCollectionAdapter extends FirestoreRecyclerAdapter<ProductCo
         return new ProductCollectionHolder(view);
     }
 
-    public class ProductCollectionHolder extends RecyclerView.ViewHolder {
+    class ProductCollectionHolder extends RecyclerView.ViewHolder {
+
+        static final String HAIR_COLLECTIONS = "HairCollections/";
+        FirebaseStorage storage = FirebaseStorage.getInstance();
 
         ImageView ivCollectionImage;
         TextView tvCollectionTitle;
 
-        public ProductCollectionHolder(@NonNull View itemView) {
+
+        ProductCollectionHolder(@NonNull View itemView) {
             super(itemView);
 
             ivCollectionImage = itemView.findViewById(R.id.iv_collection_image);
             tvCollectionTitle = itemView.findViewById(R.id.tv_collection_title);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String productTitle = tvCollectionTitle.getText().toString();
-                    listener.onCollectionInteraction(productTitle);
-                }
+            itemView.setOnClickListener(v -> {
+                String productTitle = tvCollectionTitle.getText().toString();
+                listener.onCollectionInteraction(productTitle);
             });
         }
 
         private void onBindCollection(ProductCollection collection) {
-            tvCollectionTitle.setText(collection.getTitle());
+            String title = collection.getTitle();
+            tvCollectionTitle.setText(title);
+
+
+            String fileRef = HAIR_COLLECTIONS + title + ".png";
+            StorageReference storageRef = storage.getReference(fileRef);
+
+            GlideApp.with(context)
+                    .load(storageRef)
+                    .into(ivCollectionImage);
         }
     }
 }

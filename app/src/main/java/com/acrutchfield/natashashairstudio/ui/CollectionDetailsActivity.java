@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class CollectionDetailsActivity extends AppCompatActivity {
 
-    public static final String PRODUCT_TITLE = "product_title";
+    public static final String COLLECTION_TITLE = "collection_title";
     public static final String BASE_REF = "/PRODUCT_COLLECTIONS/hair/";
     String testRef = "/PRODUCT_COLLECTIONS/hair/Beautiful Brazilian Body Wave";
 
@@ -32,12 +32,12 @@ public class CollectionDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_collection_details);
 
         Intent intent = getIntent();
-        String productTitle = intent.getStringExtra(PRODUCT_TITLE);
-        String completeRef = BASE_REF + productTitle;
-        Log.d("CollectionDetailsActivity", "onCreate: " + productTitle);
+        String collectionTitle = intent.getStringExtra(COLLECTION_TITLE);
+        String completeRef = BASE_REF + collectionTitle;
+        Log.d("CollectionDetailsActivity", "onCreate: " + collectionTitle);
         productRef = db.collection(completeRef);
 
-        setupRecyclerView();
+        setupRecyclerView(collectionTitle);
     }
 
     @Override
@@ -52,14 +52,14 @@ public class CollectionDetailsActivity extends AppCompatActivity {
         adapter.stopListening();
     }
 
-    private void setupRecyclerView() {
+    private void setupRecyclerView(String collectionTitle) {
         Query query = productRef.orderBy("title");
 
         FirestoreRecyclerOptions<Product> options = new FirestoreRecyclerOptions.Builder<Product>()
                 .setQuery(query, Product.class)
                 .build();
 
-        adapter = new ProductAdapter(options);
+        adapter = new ProductAdapter(options, collectionTitle, this);
         RecyclerView recyclerView = findViewById(R.id.rv_products);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setAdapter(adapter);
