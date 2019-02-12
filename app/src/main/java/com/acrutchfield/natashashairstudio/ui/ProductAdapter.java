@@ -19,15 +19,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ProductAdapter extends FirestoreRecyclerAdapter<Product, ProductAdapter.ProductHolder> {
 
-
+    private final ProductInteractionLister listener;
     private String collectionTitle;
     private Context context;
 
+    interface ProductInteractionLister {
+        void onProductInteraction(String fileRef);
+    }
+
     ProductAdapter(@NonNull FirestoreRecyclerOptions<Product> options,
-                   String collectionTitle, Context context) {
+                   String collectionTitle,
+                   Context context,
+                   ProductInteractionLister listener) {
         super(options);
         this.collectionTitle = collectionTitle;
         this.context = context;
+        this.listener = listener;
     }
 
     @Override
@@ -72,6 +79,10 @@ public class ProductAdapter extends FirestoreRecyclerAdapter<Product, ProductAda
             GlideApp.with(context)
                     .load(storageRef)
                     .into(ivProductImage);
+
+            itemView.setOnClickListener(v -> {
+                listener.onProductInteraction(fileRef);
+            });
         }
     }
 

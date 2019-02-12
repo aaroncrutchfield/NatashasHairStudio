@@ -15,11 +15,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class CollectionDetailsActivity extends AppCompatActivity {
+public class CollectionDetailsActivity extends AppCompatActivity implements ProductAdapter.ProductInteractionLister {
 
     public static final String COLLECTION_TITLE = "collection_title";
     public static final String BASE_REF = "/PRODUCT_COLLECTIONS/hair/";
-    String testRef = "/PRODUCT_COLLECTIONS/hair/Beautiful Brazilian Body Wave";
+    public static final String EXTRA_FILE_REF = "fileRef";
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference productRef;
@@ -59,9 +59,16 @@ public class CollectionDetailsActivity extends AppCompatActivity {
                 .setQuery(query, Product.class)
                 .build();
 
-        adapter = new ProductAdapter(options, collectionTitle, this);
+        adapter = new ProductAdapter(options, collectionTitle, this, this);
         RecyclerView recyclerView = findViewById(R.id.rv_products);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onProductInteraction(String fileRef) {
+        Intent intent = new Intent(this, ProductDetailsActivity.class);
+        intent.putExtra(EXTRA_FILE_REF, fileRef);
+        startActivity(intent);
     }
 }
