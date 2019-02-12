@@ -1,5 +1,6 @@
 package com.acrutchfield.natashashairstudio.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ShopFragment extends Fragment {
+public class ShopFragment extends Fragment implements ProductCollectionAdapter.CollectionInteractionListener {
 
     private ShopViewModel mViewModel;
 
@@ -45,7 +46,6 @@ public class ShopFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(ShopViewModel.class);
-        // TODO: Use the ViewModel
     }
 
 
@@ -68,10 +68,16 @@ public class ShopFragment extends Fragment {
                 .setQuery(query, ProductCollection.class)
                 .build();
 
-        adapter = new ProductCollectionAdapter(options);
+        adapter = new ProductCollectionAdapter(options, this);
         RecyclerView recyclerView = view.findViewById(R.id.rv_product_collections);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerView.setAdapter(adapter);
     }
 
+    @Override
+    public void onCollectionInteraction(String productTitle) {
+        Intent intent = new Intent(getContext(), CollectionDetailsActivity.class);
+        intent.putExtra("product_title", productTitle);
+        startActivity(intent);
+    }
 }

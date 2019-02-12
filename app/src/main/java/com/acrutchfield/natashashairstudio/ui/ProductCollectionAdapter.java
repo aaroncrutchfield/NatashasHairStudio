@@ -16,9 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ProductCollectionAdapter extends FirestoreRecyclerAdapter<ProductCollection, ProductCollectionAdapter.ProductCollectionHolder> {
 
+    private final CollectionInteractionListener listener;
 
-    public ProductCollectionAdapter(@NonNull FirestoreRecyclerOptions<ProductCollection> options) {
+    interface CollectionInteractionListener {
+        void onCollectionInteraction(String productTitle);
+    }
+
+    public ProductCollectionAdapter(@NonNull FirestoreRecyclerOptions<ProductCollection> options,
+                                    CollectionInteractionListener listener) {
         super(options);
+        this.listener = listener;
     }
 
     @Override
@@ -45,6 +52,14 @@ public class ProductCollectionAdapter extends FirestoreRecyclerAdapter<ProductCo
 
             ivCollectionImage = itemView.findViewById(R.id.iv_collection_image);
             tvCollectionTitle = itemView.findViewById(R.id.tv_collection_title);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String productTitle = tvCollectionTitle.getText().toString();
+                    listener.onCollectionInteraction(productTitle);
+                }
+            });
         }
 
         private void onBindCollection(ProductCollection collection) {
