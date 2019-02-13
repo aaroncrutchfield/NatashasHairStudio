@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.acrutchfield.natashashairstudio.R;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Arrays;
 import java.util.List;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
         navigation = findViewById(R.id.navigation);
+        FloatingActionButton fabProfile = findViewById(R.id.fab_profile);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         fragmentManager = getSupportFragmentManager();
@@ -75,6 +77,15 @@ public class MainActivity extends AppCompatActivity {
             navigation.setSelectedItemId(R.id.navigation_shop);
         }
 
+        fabProfile.setOnClickListener(v -> {
+            signIn();
+        });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
