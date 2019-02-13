@@ -19,7 +19,7 @@ public class CollectionDetailsActivity extends AppCompatActivity implements Prod
 
     public static final String COLLECTION_TITLE = "collection_title";
     public static final String BASE_REF = "/PRODUCT_COLLECTIONS/hair/";
-    public static final String EXTRA_FILE_REF = "fileRef";
+    public static final String EXTRA_PRODUCT_REF = "productRef";
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference productRef;
@@ -66,9 +66,9 @@ public class CollectionDetailsActivity extends AppCompatActivity implements Prod
     }
 
     @Override
-    public void onProductInteraction(String fileRef) {
+    public void onProductInteraction(String productRef) {
         Intent intent = new Intent(this, ProductDetailsActivity.class);
-        intent.putExtra(EXTRA_FILE_REF, fileRef);
+        intent.putExtra(EXTRA_PRODUCT_REF, productRef);
         startActivity(intent);
     }
 }

@@ -53,7 +53,7 @@ public class ProductAdapter extends FirestoreRecyclerAdapter<Product, ProductAda
 
     class ProductHolder extends RecyclerView.ViewHolder {
 
-        final String COLLECTION_FOLDER = "HairCollections/" + collectionTitle + "/";
+        final String COLLECTION_FOLDER = "PRODUCT_COLLECTION/hair/" + collectionTitle + "/";
         FirebaseStorage storage = FirebaseStorage.getInstance();
 
         ImageView ivProductImage;
@@ -73,15 +73,16 @@ public class ProductAdapter extends FirestoreRecyclerAdapter<Product, ProductAda
             tvProductTitle.setText(productTitle);
             tvProductPriceRange.setText(product.getPriceRange());
 
-            String fileRef = COLLECTION_FOLDER + productTitle + ".png";
-            StorageReference storageRef = storage.getReference(fileRef);
+            String productRef = COLLECTION_FOLDER + productTitle;
+            String productPhotoRef = productRef + ".png";
+            StorageReference storageRef = storage.getReference(productPhotoRef);
 
             GlideApp.with(context)
                     .load(storageRef)
                     .into(ivProductImage);
 
             itemView.setOnClickListener(v -> {
-                listener.onProductInteraction(fileRef);
+                listener.onProductInteraction(productRef);
             });
         }
     }

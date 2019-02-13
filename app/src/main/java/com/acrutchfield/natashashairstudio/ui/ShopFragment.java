@@ -76,9 +76,9 @@ public class ShopFragment extends Fragment implements ProductCollectionAdapter.C
     }
 
     @Override
-    public void onCollectionInteraction(String productTitle) {
+    public void onCollectionInteraction(String collectionTitle) {
         Intent intent = new Intent(getContext(), CollectionDetailsActivity.class);
-        intent.putExtra(COLLECTION_TITLE, productTitle);
+        intent.putExtra(COLLECTION_TITLE, collectionTitle);
         startActivity(intent);
     }
 }

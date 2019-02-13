@@ -50,7 +50,7 @@ public class ProductCollectionAdapter extends FirestoreRecyclerAdapter<ProductCo
 
     class ProductCollectionHolder extends RecyclerView.ViewHolder {
 
-        static final String HAIR_COLLECTIONS = "HairCollections/";
+        static final String HAIR_COLLECTIONS = "HAIR_COLLECTION_META_DATA/";
         FirebaseStorage storage = FirebaseStorage.getInstance();
 
         ImageView ivCollectionImage;
@@ -64,18 +64,18 @@ public class ProductCollectionAdapter extends FirestoreRecyclerAdapter<ProductCo
             tvCollectionTitle = itemView.findViewById(R.id.tv_collection_title);
 
             itemView.setOnClickListener(v -> {
-                String productTitle = tvCollectionTitle.getText().toString();
-                listener.onCollectionInteraction(productTitle);
+                String collectionTitle = tvCollectionTitle.getText().toString();
+                listener.onCollectionInteraction(collectionTitle);
             });
         }
 
         private void onBindCollection(ProductCollection collection) {
-            String title = collection.getTitle();
-            tvCollectionTitle.setText(title);
+            String collectionTitle = collection.getTitle();
+            tvCollectionTitle.setText(collectionTitle);
 
 
-            String fileRef = HAIR_COLLECTIONS + title + ".png";
-            StorageReference storageRef = storage.getReference(fileRef);
+            String collectionPhotoRef = HAIR_COLLECTIONS + collectionTitle + ".png";
+            StorageReference storageRef = storage.getReference(collectionPhotoRef);
 
             GlideApp.with(context)
                     .load(storageRef)
