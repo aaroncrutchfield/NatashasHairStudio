@@ -53,7 +53,7 @@ public class ProductAdapter extends FirestoreRecyclerAdapter<Product, ProductAda
 
     class ProductHolder extends RecyclerView.ViewHolder {
 
-        final String COLLECTION_FOLDER = "PRODUCT_COLLECTION/hair/" + collectionTitle + "/";
+        final String COLLECTION_FOLDER = "PRODUCT_COLLECTIONS/hair/" + collectionTitle + "/";
         FirebaseStorage storage = FirebaseStorage.getInstance();
 
         ImageView ivProductImage;

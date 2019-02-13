@@ -40,7 +40,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:color/black" />
+                app:srcCompat="@android:color/black"
+                android:contentDescription="@string/product_details_image" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"
@@ -62,6 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toTopOf="@+id/guideline"
                 tools:text="Vivacious Brazilian Loose Wave" />
@@ -71,6 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="@+id/tv_details_collection_title"
                 app:layout_constraintTop_toBottomOf="@+id/tv_details_collection_title"
                 tools:text="4x4 Lace Closure" />
@@ -105,6 +108,7 @@
                 android:layout_marginTop="8dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/colorAccent"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/tv_details_title"
                 app:layout_constraintTop_toBottomOf="@+id/div_horizontal"
                 tools:text="$65 - 125" />
@@ -126,7 +130,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:text="Length"
+                android:text="@string/length"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_price"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
                 app:layout_constraintTop_toTopOf="@+id/tv_price" />
@@ -148,7 +153,8 @@
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="16dp"
                 android:background="@color/colorPrimaryDark"
-                android:text="Add to Wishlist"
+                android:text="@string/add_to_wishlist"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
