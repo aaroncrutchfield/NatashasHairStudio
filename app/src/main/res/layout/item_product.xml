@@ -15,16 +15,17 @@
 
         <TextView
             android:id="@+id/tv_product_title"
+            android:layout_height="40dp"
             style="@style/title_store"
             tools:text="4x4 Lace Closure" />
 
         <TextView
             android:id="@+id/tv_product_pricerange"
+            android:textColor="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="24dp"
             android:layout_marginTop="8dp"
-            android:gravity="bottom|end"
-            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
             android:paddingBottom="8dp"
             tools:text="$75 - 125" />
     </LinearLayout>
