@@ -15,7 +15,7 @@
     <string name="service">Service</string>
     <string name="details">Details</string>
     <string name="profile_image">Profile image</string>
-    <string name="how_was_your_service">How was your service?</string>
+    <string name="comments">Comments</string>
 
     <string-array name="ratings_array">
         <item>5</item>

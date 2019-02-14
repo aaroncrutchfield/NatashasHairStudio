@@ -31,18 +31,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_profile"
-            app:layout_constraintStart_toStartOf="@+id/tv_review_rating"
-            tools:text="Full Sew-In" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/tv_review_date"
+            app:layout_constraintStart_toStartOf="@+id/tv_review_date"
+            tools:text="Chemical Service" />
 
         <TextView
             android:id="@+id/tv_review_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
             android:textColor="@color/colorPrimary"
-            android:textSize="24sp"
-            app:layout_constraintStart_toEndOf="@+id/iv_profile"
+            android:textSize="48sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_profile"
+            app:layout_constraintEnd_toEndOf="@+id/tv_review_details"
             app:layout_constraintTop_toTopOf="@+id/iv_profile"
             tools:text="5.0" />
 
@@ -52,6 +55,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/iv_profile"
             app:layout_constraintTop_toBottomOf="@+id/iv_profile"
@@ -61,7 +66,9 @@
             android:id="@+id/tv_review_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@+id/tv_review_details"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_profile"
+            app:layout_constraintStart_toEndOf="@+id/iv_profile"
             app:layout_constraintTop_toTopOf="@+id/iv_profile"
             tools:text="02/23/19" />
 
@@ -69,12 +76,8 @@
             android:id="@+id/tv_client_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/tv_review_details"
-            app:layout_constraintTop_toBottomOf="@+id/tv_review_details"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/tv_review_date"
+            app:layout_constraintTop_toBottomOf="@+id/tv_review_date"
             tools:text="Aaron Crutchfield" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -57,7 +57,8 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
 
         void onBindReview(Review review) {
             tvService.setText(review.getService());
-            tvRating.setText(review.getRating());
+            String rating = String.format("%s.0", review.getRating());
+            tvRating.setText(rating);
             tvDetails.setText(review.getDetails());
             tvDate.setText(review.getDate());
             tvClientName.setText(review.getClientName());
