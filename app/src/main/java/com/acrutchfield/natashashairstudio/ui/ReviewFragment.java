@@ -50,8 +50,6 @@ public class ReviewFragment extends Fragment {
 
     private Review.Builder reviewBuilder;
 
-    private FloatingActionButton fabAddReview;
-
     static ReviewFragment newInstance() {
         return new ReviewFragment();
     }
@@ -63,7 +61,7 @@ public class ReviewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_review, container, false);
         setupRecyclerView(view);
 
-        fabAddReview = view.findViewById(R.id.fab_add_review);
+        FloatingActionButton fabAddReview = view.findViewById(R.id.fab_add_review);
 
         fabAddReview.setOnClickListener(v -> {
             // TODO: 2/13/19 check if logged on
@@ -97,7 +95,7 @@ public class ReviewFragment extends Fragment {
                 .setQuery(query, Review.class)
                 .build();
 
-        adapter = new ReviewAdapter(options);
+        adapter = new ReviewAdapter(options, getContext());
         RecyclerView recyclerView = view.findViewById(R.id.rv_reviews);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
@@ -128,14 +126,14 @@ public class ReviewFragment extends Fragment {
                 .setPositiveButton("Submit", (dialog, which) -> {
 
                 })
-                .setNegativeButton("Cancel", (dialog, which) -> notifyUser("Canceled", view))
+                .setNegativeButton("Cancel", (dialog, which) -> notifyUser("Canceled"))
                 .create();
         alertDialog.show();
 
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             String details = etDetails.getText().toString();
             if (details.trim().equals("")) {
-                notifyUser("Please add details before submitting", view);
+                notifyUser("Please add details before submitting");
             } else {
                 addReview(details, view);
 
@@ -155,12 +153,12 @@ public class ReviewFragment extends Fragment {
         Review review = reviewBuilder.build();
         reviewsRef.add(review)
                 .addOnSuccessListener(
-                        documentReference -> notifyUser("We appreciate your feedback!", view))
+                        documentReference -> notifyUser("We appreciate your feedback!"))
                 .addOnFailureListener(
-                        e -> notifyUser("Failure. Check your network connection.", view));
+                        e -> notifyUser("Failure. Check your network connection."));
     }
 
-    private void notifyUser(String message, View view) {
+    private void notifyUser(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 

@@ -1,5 +1,6 @@
 package com.acrutchfield.natashashairstudio.ui;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import com.acrutchfield.natashashairstudio.R;
 import com.acrutchfield.natashashairstudio.model.Review;
+import com.bumptech.glide.request.RequestOptions;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
@@ -17,9 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapter.ReviewHolder> {
 
 
+    private Context context;
 
-    ReviewAdapter(@NonNull FirestoreRecyclerOptions<Review> options) {
+    ReviewAdapter(@NonNull FirestoreRecyclerOptions<Review> options, Context context) {
         super(options);
+        this.context = context;
     }
 
     @Override
@@ -62,6 +66,11 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
             tvDetails.setText(review.getDetails());
             tvDate.setText(review.getDate());
             tvClientName.setText(review.getClientName());
+
+            GlideApp.with(context)
+                    .load(review.getPhotoUrl())
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(ivProfile);
         }
     }
 }
