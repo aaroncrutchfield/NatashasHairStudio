@@ -15,4 +15,23 @@
     <string name="service">Service</string>
     <string name="details">Details</string>
     <string name="profile_image">Profile image</string>
+    <string name="how_was_your_service">How was your service?</string>
+
+    <string-array name="ratings_array">
+        <item>5</item>
+        <item>4</item>
+        <item>3</item>
+        <item>2</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="ratings_services">
+        <item>Consultation</item>
+        <item>Basic Service</item>
+        <item>Braids</item>
+        <item>Chemical Service</item>
+        <item>For The Fellas</item>
+        <item>Sew-Ins</item>
+        <item>Wig Install</item>
+    </string-array>
 </resources>

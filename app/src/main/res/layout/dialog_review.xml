@@ -32,10 +32,10 @@
         android:layout_marginEnd="8dp"
         android:text="@string/details"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toTopOf="@+id/editText" />
+        app:layout_constraintTop_toTopOf="@+id/et_details" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/sp_rating"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -44,7 +44,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView" />
 
     <Spinner
-        android:id="@+id/spinner2"
+        android:id="@+id/sp_service"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -53,7 +53,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView2" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/et_details"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -65,7 +65,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toBottomOf="@+id/spinner2"
+        app:layout_constraintTop_toBottomOf="@+id/sp_service"
+        android:hint="@string/how_was_your_service"
         android:importantForAutofill="no" />
 
     <androidx.constraintlayout.widget.Guideline

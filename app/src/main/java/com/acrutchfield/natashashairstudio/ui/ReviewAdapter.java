@@ -1,6 +1,5 @@
 package com.acrutchfield.natashashairstudio.ui;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +42,7 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
         TextView tvRating;
         TextView tvDetails;
         TextView tvDate;
+        TextView tvClientName;
 
         ReviewHolder(@NonNull View itemView) {
             super(itemView);
@@ -52,14 +52,15 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
             tvRating = itemView.findViewById(R.id.tv_review_rating);
             tvDetails = itemView.findViewById(R.id.tv_review_details);
             tvDate = itemView.findViewById(R.id.tv_review_date);
+            tvClientName = itemView.findViewById(R.id.tv_client_name);
         }
 
         void onBindReview(Review review) {
             tvService.setText(review.getService());
-            tvRating.setText(String.valueOf(review.getRating()));
+            tvRating.setText(review.getRating());
             tvDetails.setText(review.getDetails());
             tvDate.setText(review.getDate());
-            Log.d("ReviewHolder", "onBindReview: " + review.getService());
+            tvClientName.setText(review.getClientName());
         }
     }
 }
