@@ -35,11 +35,19 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ReviewFragment extends Fragment {
+public class ReviewFragment extends Fragment implements DeleteItemCallback.DeletePromptInterface {
 
+    private static final String REVIEW_DELETED = "Your review was deleted.";
+    private static final String REVIEW_ERROR = "Error. Your review could not be deleted.";
+    private static final String CONFIRM = "Confirm";
+    private static final String REVIEW_CONFIRM_DELETE = "Are you sure you want to delete this review?";
+    private static final String REVIEW_DELETE_TITLE = "Delete Review";
+    private static final String REVIEW_NOT_YOURS = "You can only delete reviews you created.";
+    private static final String REVIEW_DELETE_CANCELED = "Delete canceled.";
     private ReviewViewModel mViewModel;
     private FirebaseUser user;
 
@@ -96,9 +104,16 @@ public class ReviewFragment extends Fragment {
                 .build();
 
         adapter = new ReviewAdapter(options, getContext());
+
+        ItemTouchHelper.SimpleCallback simpleCallback =
+                new DeleteItemCallback(getContext(), this, 0, ItemTouchHelper.LEFT);
+
         RecyclerView recyclerView = view.findViewById(R.id.rv_reviews);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     @Override
@@ -135,14 +150,14 @@ public class ReviewFragment extends Fragment {
             if (details.trim().equals("")) {
                 notifyUser("Please add details before submitting");
             } else {
-                addReview(details, view);
+                addReview(details);
 
                 alertDialog.dismiss();
             }
         });
     }
 
-    private void addReview(String details, View view) {
+    private void addReview(String details) {
         reviewBuilder
                 .clientName(user.getDisplayName())
                 .date(getTodaysDate())
@@ -207,4 +222,30 @@ public class ReviewFragment extends Fragment {
     }
 
 
+    @Override
+    public void promptForDelete(String uid, String id, int position) {
+        AlertDialog.Builder builder;
+        if (user.getUid().equals(uid)) {
+            builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()))
+                    .setTitle(REVIEW_DELETE_TITLE)
+                    .setMessage(REVIEW_CONFIRM_DELETE)
+                    .setPositiveButton(CONFIRM, (dialog, which) -> reviewsRef.document(id).delete().addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            adapter.notifyItemRemoved(position);
+                            adapter.notifyDataSetChanged();
+                            notifyUser(REVIEW_DELETED);
+                        } else {
+                            notifyUser(REVIEW_ERROR);
+                        }
+                    }))
+                    .setNegativeButton("Cancel", (dialog, which) -> {
+                        adapter.notifyDataSetChanged();
+                        notifyUser(REVIEW_DELETE_CANCELED);
+                    });
+            builder.create().show();
+        } else {
+            adapter.notifyDataSetChanged();
+            notifyUser(REVIEW_NOT_YOURS);
+        }
+    }
 }

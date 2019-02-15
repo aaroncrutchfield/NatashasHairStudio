@@ -19,16 +19,20 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapter.ReviewHolder> {
 
 
+    public static final int KEY_ID = 1;
+    public static final int KEY_UID = 2;
+    private final FirestoreRecyclerOptions<Review> options;
     private Context context;
 
     ReviewAdapter(@NonNull FirestoreRecyclerOptions<Review> options, Context context) {
         super(options);
+        this.options = options;
         this.context = context;
     }
 
     @Override
     protected void onBindViewHolder(@NonNull ReviewHolder reviewHolder, int i, @NonNull Review review) {
-        reviewHolder.onBindReview(review);
+        reviewHolder.onBindReview(review, i);
     }
 
     @NonNull
@@ -59,13 +63,18 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
             tvClientName = itemView.findViewById(R.id.tv_client_name);
         }
 
-        void onBindReview(Review review) {
+        void onBindReview(Review review, int position) {
             tvService.setText(review.getService());
             String rating = String.format("%s.0", review.getRating());
             tvRating.setText(rating);
             tvDetails.setText(review.getDetails());
             tvDate.setText(review.getDate());
             tvClientName.setText(review.getClientName());
+
+            // Set id to tag on itemView to assist with delete
+            String id = options.getSnapshots().getSnapshot(position).getId();
+            itemView.setTag(R.string.id, id);
+            itemView.setTag(R.string.uid, review.getUid());
 
             GlideApp.with(context)
                     .load(review.getPhotoUrl())
