@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                         replaceFragment(ReviewFragment.newInstance());
                         return true;
                     case R.id.navigation_social:
-                        replaceFragment(SocialFragment.newInstance(null, null));
+                        replaceFragment(SocialFragment.newInstance());
                         return true;
                 }
                 return false;
@@ -76,9 +76,7 @@ public class MainActivity extends AppCompatActivity {
             navigation.setSelectedItemId(R.id.navigation_shop);
         }
 
-        fabProfile.setOnClickListener(v -> {
-            signIn();
-        });
+        fabProfile.setOnClickListener(v -> signIn());
 
     }
 

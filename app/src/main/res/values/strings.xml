@@ -18,6 +18,10 @@
     <string name="comments">Comments</string>
     <string name="uid">uid</string>
     <string name="id">id</string>
+    <string name="throne_image">Throne image</string>
+    <string name="show_your_crown_image">Show your crown image</string>
+    <string name="instagram_page_link">Instagram page link</string>
+    <string name="facebook_page_link">Facebook page link</string>
 
     <string-array name="ratings_array">
         <item>5</item>
