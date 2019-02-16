@@ -1,5 +1,6 @@
 package com.acrutchfield.natashashairstudio.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.widget.Toast;
@@ -76,8 +77,13 @@ public class MainActivity extends AppCompatActivity {
             navigation.setSelectedItemId(R.id.navigation_shop);
         }
 
-        fabProfile.setOnClickListener(v -> signIn());
+        fabProfile.setOnClickListener(v -> launchProfileActivity());
 
+    }
+
+    private void launchProfileActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
     @Override

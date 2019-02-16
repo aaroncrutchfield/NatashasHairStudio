@@ -5,4 +5,5 @@
     <color name="colorAccent">#00bfa5</color>
     <color name="darkGrey">#242424</color>
     <color name="grey">#676767</color>
+    <color name="error_red">#B00020</color>
 </resources>
