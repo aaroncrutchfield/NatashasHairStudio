@@ -69,13 +69,11 @@ public class LoginActivity extends AppCompatActivity {
         TextView tvSignOut = findViewById(R.id.tv_sign_out);
         TextView tvDeleteAccount = findViewById(R.id.tv_delete_account);
         Button btnSignInGoogle = findViewById(R.id.btn_sign_in_google);
-        Button btnViewWishList = findViewById(R.id.btn_view_wish_list);
         ivLoginPicture = findViewById(R.id.iv_login_picture);
         ivPictureOutline = findViewById(R.id.iv_picture_outline);
 
         btnSignInGoogle.setOnClickListener(v -> signIn());
         tvSignOut.setOnClickListener(v -> signOut());
-        btnViewWishList.setOnClickListener(v -> launchWishlist());
 
         tvDeleteAccount.setOnClickListener(v -> {
             if (FirebaseAuth.getInstance().getCurrentUser() != null)
@@ -90,10 +88,6 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             signedOutUI();
         }
-    }
-
-    private void launchWishlist() {
-
     }
 
     private void signedOutUI() {
