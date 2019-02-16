@@ -41,13 +41,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
     FirebaseAuth auth;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private DocumentReference productInfoRef;
-    private ImageView ivDetailImage;
     private TextView tvCollectionTitle;
     private TextView tvProductTitle;
     private TextView tvPriceRange;
     private Spinner spLengthOptions;
-    private Button btnWishList;
     private String wishlistPath;
     private Product product;
 
@@ -66,12 +63,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
-        ivDetailImage = findViewById(R.id.iv_details_image);
+        ImageView ivDetailImage = findViewById(R.id.iv_details_image);
+        Button btnWishList = findViewById(R.id.btn_wish_list);
         tvCollectionTitle = findViewById(R.id.tv_details_collection_title);
         tvProductTitle = findViewById(R.id.tv_details_title);
         tvPriceRange = findViewById(R.id.tv_price);
         spLengthOptions = findViewById(R.id.sp_length_options);
-        btnWishList = findViewById(R.id.btn_wish_list);
 
         Intent intent = getIntent();
         String productRef = intent.getStringExtra(EXTRA_PRODUCT_REF);
@@ -82,7 +79,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 .into(ivDetailImage);
 
         String infoPath = "/" + productRef;
-        productInfoRef = db.document(infoPath);
+        DocumentReference productInfoRef = db.document(infoPath);
 
         productInfoRef.get().addOnCompleteListener(task -> updateUI(infoPath, task));
 

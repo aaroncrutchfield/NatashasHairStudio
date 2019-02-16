@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.LoginActivity"
-            android:parentActivityName=".ui.MainActivity">
-        </activity>
+        <activity android:name=".ui.WishListActivity"></activity>
+        <activity
+            android:name=".ui.LoginActivity"
+            android:parentActivityName=".ui.MainActivity"></activity>
         <activity android:name=".ui.ProductDetailsActivity" />
         <activity android:name=".ui.CollectionDetailsActivity" />
         <activity
