@@ -5,9 +5,9 @@ android {
     signingConfigs {
         config {
             keyAlias 'key0'
-            keyPassword 'boogie4745'
-            storeFile file('/Users/aaroncrutchfield/keystore')
-            storePassword 'aceboogie64'
+            keyPassword 'aceboogie64'
+            storeFile file('/Users/aaroncrutchfield/Documents/keystore/myKeystore')
+            storePassword 'boogie4745'
         }
     }
     compileSdkVersion 28
@@ -26,6 +26,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
             debuggable true
+        }
+        debug {
+            signingConfig signingConfigs.config
         }
     }
     compileOptions {
