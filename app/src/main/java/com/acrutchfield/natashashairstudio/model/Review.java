@@ -8,11 +8,12 @@ public class Review {
     private String uid;
     private String photoUrl;
     private String clientName;
+    private String id;
 
     public Review() {
     }
 
-    public Review(String date, String details, String rating, String service, String uid, String photoUrl, String clientName) {
+    public Review(String date, String details, String rating, String service, String uid, String photoUrl, String clientName, String id) {
         this.date = date;
         this.details = details;
         this.rating = rating;
@@ -20,6 +21,7 @@ public class Review {
         this.uid = uid;
         this.photoUrl = photoUrl;
         this.clientName = clientName;
+        this.id = id;
     }
 
     private Review(Builder builder) {
@@ -88,6 +90,14 @@ public class Review {
         this.clientName = clientName;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
 
     public static final class Builder {
         private String date;
@@ -97,8 +107,14 @@ public class Review {
         private String uid;
         private String photoUrl;
         private String clientName;
+        private String id;
 
         public Builder() {
+        }
+
+        public Builder id(String val) {
+            id = val;
+            return this;
         }
 
         public Builder date(String val) {

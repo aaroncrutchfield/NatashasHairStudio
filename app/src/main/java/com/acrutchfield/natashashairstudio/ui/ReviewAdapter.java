@@ -10,30 +10,25 @@ import android.widget.TextView;
 import com.acrutchfield.natashashairstudio.R;
 import com.acrutchfield.natashashairstudio.model.Review;
 import com.bumptech.glide.request.RequestOptions;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapter.ReviewHolder> {
+public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHolder> {
 
 
     public static final int KEY_ID = 1;
     public static final int KEY_UID = 2;
-    private final FirestoreRecyclerOptions<Review> options;
     private Context context;
+    private List<Review> reviews;
 
-    ReviewAdapter(@NonNull FirestoreRecyclerOptions<Review> options, Context context) {
-        super(options);
-        this.options = options;
+    ReviewAdapter(Context context) {
         this.context = context;
     }
 
-    @Override
-    protected void onBindViewHolder(@NonNull ReviewHolder reviewHolder, int i, @NonNull Review review) {
-        reviewHolder.onBindReview(review, i);
-    }
+
 
     @NonNull
     @Override
@@ -41,6 +36,20 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_review, parent, false);
         return new ReviewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ReviewHolder holder, int position) {
+        holder.onBindReview(reviews.get(position));
+    }
+
+    void updateReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    @Override
+    public int getItemCount() {
+        return reviews.size();
     }
 
     class ReviewHolder extends RecyclerView.ViewHolder {
@@ -63,7 +72,7 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
             tvClientName = itemView.findViewById(R.id.tv_client_name);
         }
 
-        void onBindReview(Review review, int position) {
+        void onBindReview(Review review) {
             tvService.setText(review.getService());
             String rating = String.format("%s.0", review.getRating());
             tvRating.setText(rating);
@@ -72,8 +81,7 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
             tvClientName.setText(review.getClientName());
 
             // Set id to tag on itemView to assist with delete
-            String id = options.getSnapshots().getSnapshot(position).getId();
-            itemView.setTag(R.string.id, id);
+            itemView.setTag(R.string.id, review.getId());
             itemView.setTag(R.string.uid, review.getUid());
 
             GlideApp.with(context)

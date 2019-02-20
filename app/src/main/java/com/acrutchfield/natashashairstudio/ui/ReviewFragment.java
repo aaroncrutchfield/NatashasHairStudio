@@ -11,23 +11,17 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.acrutchfield.natashashairstudio.R;
+import com.acrutchfield.natashashairstudio.Utils;
 import com.acrutchfield.natashashairstudio.model.Review;
 import com.acrutchfield.natashashairstudio.viewmodel.ReviewViewModel;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -38,6 +32,8 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import static com.acrutchfield.natashashairstudio.Utils.notifyUser;
 
 public class ReviewFragment extends Fragment implements DeleteItemCallback.DeletePromptInterface {
 
@@ -81,29 +77,27 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
         FirebaseAuth auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
 
+        // TODO: 2/19/19 should this be called in onActivityCreated
+        mViewModel = ViewModelProviders.of(this).get(ReviewViewModel.class);
+        mViewModel.getLiveDataReviews().observe(this, reviews -> {
+
+        });
+
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        adapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        adapter.stopListening();
     }
 
     private void setupRecyclerView(View view) {
-        Query query = reviewsRef.orderBy("date");
-
-        FirestoreRecyclerOptions<Review> options = new FirestoreRecyclerOptions.Builder<Review>()
-                .setQuery(query, Review.class)
-                .build();
-
-        adapter = new ReviewAdapter(options, getContext());
+        adapter = new ReviewAdapter(getContext());
 
         ItemTouchHelper.SimpleCallback simpleCallback =
                 new DeleteItemCallback(getContext(), this, 0, ItemTouchHelper.LEFT);
@@ -119,7 +113,6 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ReviewViewModel.class);
         // TODO: Use the ViewModel
     }
 
@@ -141,14 +134,14 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
                 .setPositiveButton("Submit", (dialog, which) -> {
 
                 })
-                .setNegativeButton("Cancel", (dialog, which) -> notifyUser("Canceled"))
+                .setNegativeButton("Cancel", (dialog, which) -> notifyUser("Canceled", getContext()))
                 .create();
         alertDialog.show();
 
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             String details = etDetails.getText().toString();
             if (details.trim().equals("")) {
-                notifyUser("Please add details before submitting");
+                notifyUser("Please add details before submitting", getContext());
             } else {
                 addReview(details);
 
@@ -160,27 +153,12 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
     private void addReview(String details) {
         reviewBuilder
                 .clientName(user.getDisplayName())
-                .date(getTodaysDate())
+                .date(Utils.getTodaysDate())
                 .details(details)
                 .photoUrl(Objects.requireNonNull(user.getPhotoUrl()).toString())
                 .uid(user.getUid());
 
-        Review review = reviewBuilder.build();
-        reviewsRef.add(review)
-                .addOnSuccessListener(
-                        documentReference -> notifyUser("We appreciate your feedback!"))
-                .addOnFailureListener(
-                        e -> notifyUser("Failure. Check your network connection."));
-    }
-
-    private void notifyUser(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    private String getTodaysDate() {
-        Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-        return sdf.format(date);
+        mViewModel.addReview(reviewBuilder.build());
     }
 
     private void setupDialogSpinners(Spinner spRating, Spinner spService) {
@@ -233,19 +211,19 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
                         if (task.isSuccessful()) {
                             adapter.notifyItemRemoved(position);
                             adapter.notifyDataSetChanged();
-                            notifyUser(REVIEW_DELETED);
+                            notifyUser(REVIEW_DELETED, getContext());
                         } else {
-                            notifyUser(REVIEW_ERROR);
+                            notifyUser(REVIEW_ERROR, getContext());
                         }
                     }))
                     .setNegativeButton("Cancel", (dialog, which) -> {
                         adapter.notifyDataSetChanged();
-                        notifyUser(REVIEW_DELETE_CANCELED);
+                        notifyUser(REVIEW_DELETE_CANCELED, getContext());
                     });
             builder.create().show();
         } else {
             adapter.notifyDataSetChanged();
-            notifyUser(REVIEW_NOT_YOURS);
+            notifyUser(REVIEW_NOT_YOURS, getContext());
         }
     }
 }

@@ -63,7 +63,7 @@ public class WishListAdapter extends FirestoreRecyclerAdapter<Product, WishListA
         public void onBindProduct(Product product) {
             tvWishListProduct.setText(product.getTitle());
             tvWishListPriceRange.setText(product.getPriceRange());
-            tvWishListCollection.setText();
+            // tvWishListCollection.setText();
         }
     }
 }
