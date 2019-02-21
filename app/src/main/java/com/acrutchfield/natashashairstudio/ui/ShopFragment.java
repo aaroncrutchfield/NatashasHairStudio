@@ -7,12 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.acrutchfield.natashashairstudio.R;
-import com.acrutchfield.natashashairstudio.model.ProductCollection;
 import com.acrutchfield.natashashairstudio.viewmodel.ShopViewModel;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,8 +21,6 @@ public class ShopFragment extends Fragment implements ProductCollectionAdapter.C
     private static final String COLLECTION_TITLE = "collection_title";
     private ShopViewModel mViewModel;
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference hairMetaRef = db.collection("/HAIR_COLLECTION_META_DATA");
     private ProductCollectionAdapter adapter;
 
     static ShopFragment newInstance() {
@@ -39,6 +32,7 @@ public class ShopFragment extends Fragment implements ProductCollectionAdapter.C
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_shop, container, false);
+        mViewModel = ViewModelProviders.of(this).get(ShopViewModel.class);
         setupRecyclerView(view);
         return view;
     }
@@ -46,33 +40,27 @@ public class ShopFragment extends Fragment implements ProductCollectionAdapter.C
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ShopViewModel.class);
     }
 
 
     @Override
     public void onStart() {
         super.onStart();
-        adapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        adapter.stopListening();
     }
 
     private void setupRecyclerView(View view) {
-        Query query = hairMetaRef.orderBy("title");
-
-        FirestoreRecyclerOptions<ProductCollection> options = new FirestoreRecyclerOptions.Builder<ProductCollection>()
-                .setQuery(query, ProductCollection.class)
-                .build();
-
-        adapter = new ProductCollectionAdapter(options, this, getContext());
+        adapter = new ProductCollectionAdapter(this, getContext());
         RecyclerView recyclerView = view.findViewById(R.id.rv_product_collections);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerView.setAdapter(adapter);
+
+        mViewModel.getCollectionLiveData().observe(this,
+                productCollections -> adapter.updateProductCollections(productCollections));
     }
 
     @Override

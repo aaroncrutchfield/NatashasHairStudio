@@ -14,12 +14,12 @@
     <string name="rating">Rating</string>
     <string name="service">Service</string>
     <string name="details">Details</string>
-    <string name="profile_image">Profile image</string>
+    <string name="profile_image">Profile imageUrl</string>
     <string name="comments">Comments</string>
     <string name="uid">uid</string>
     <string name="id">id</string>
-    <string name="throne_image">Throne image</string>
-    <string name="show_your_crown_image">Show your crown image</string>
+    <string name="throne_image">Throne imageUrl</string>
+    <string name="show_your_crown_image">Show your crown imageUrl</string>
     <string name="instagram_page_link">Instagram page link</string>
     <string name="facebook_page_link">Facebook page link</string>
     <string name="sign_in_with_google">Sign In with Google</string>

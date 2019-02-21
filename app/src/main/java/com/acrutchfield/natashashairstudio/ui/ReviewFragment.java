@@ -79,7 +79,7 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
 
         // TODO: 2/19/19 should this be called in onActivityCreated
         mViewModel = ViewModelProviders.of(this).get(ReviewViewModel.class);
-        mViewModel.getLiveDataReviews().observe(this, reviews -> {
+        mViewModel.getReviewsLiveData().observe(this, reviews -> {
 
         });
 

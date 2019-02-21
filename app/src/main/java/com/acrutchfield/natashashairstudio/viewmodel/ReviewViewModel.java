@@ -7,12 +7,10 @@ import com.acrutchfield.natashashairstudio.data.FirestoreQueryLivedata;
 import com.acrutchfield.natashashairstudio.model.Review;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.arch.core.util.Function;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
@@ -23,17 +21,20 @@ public class ReviewViewModel extends AndroidViewModel {
     private static final String ORDER_BY_DATE = "date";
     private static final String ID = "id";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     private CollectionReference reviewsRef = db.collection("/REVIEWS");
 
-    private final FirestoreQueryLivedata liveData = new FirestoreQueryLivedata(reviewsRef, ORDER_BY_DATE);
-    private final LiveData<List<Review>> liveDataReviews = Transformations.map(liveData, new Deserializer());
+    private final FirestoreQueryLivedata reviewsLiveQuery = new FirestoreQueryLivedata(reviewsRef, ORDER_BY_DATE);
+
+    private final LiveData<List<Review>> reviewsLiveData =
+            Transformations.map(reviewsLiveQuery, input -> input.toObjects(Review.class));
 
     public ReviewViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public LiveData<List<Review>> getLiveDataReviews() {
-        return liveDataReviews;
+    public LiveData<List<Review>> getReviewsLiveData() {
+        return reviewsLiveData;
     }
 
     public void addReview(Review review) {
@@ -50,14 +51,4 @@ public class ReviewViewModel extends AndroidViewModel {
                         e -> Utils.notifyUser("Failure. Check your network connection.",
                                 getApplication().getBaseContext()));
     }
-
-    private class Deserializer implements Function<QuerySnapshot, List<Review>> {
-
-        @Override
-        public List<Review> apply(QuerySnapshot input) {
-            return input.toObjects(Review.class);
-        }
-    }
-
-    // TODO: Implement the ViewModel
 }

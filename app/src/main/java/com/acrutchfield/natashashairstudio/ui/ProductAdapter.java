@@ -9,37 +9,28 @@ import android.widget.TextView;
 
 import com.acrutchfield.natashashairstudio.R;
 import com.acrutchfield.natashashairstudio.model.Product;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ProductAdapter extends FirestoreRecyclerAdapter<Product, ProductAdapter.ProductHolder> {
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductHolder> {
 
     private final ProductInteractionLister listener;
-    private String collectionTitle;
     private Context context;
 
+    private List<Product> products;
+
     interface ProductInteractionLister {
-        void onProductInteraction(String fileRef);
+        void onProductInteraction(Product product);
     }
 
-    ProductAdapter(@NonNull FirestoreRecyclerOptions<Product> options,
-                   String collectionTitle,
-                   Context context,
-                   ProductInteractionLister listener) {
-        super(options);
-        this.collectionTitle = collectionTitle;
+    ProductAdapter(Context context, ProductInteractionLister listener) {
         this.context = context;
         this.listener = listener;
-    }
-
-    @Override
-    protected void onBindViewHolder(@NonNull ProductHolder productHolder, int i, @NonNull Product product) {
-        productHolder.onBindProduct(product);
     }
 
     @NonNull
@@ -47,13 +38,26 @@ public class ProductAdapter extends FirestoreRecyclerAdapter<Product, ProductAda
     public ProductHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_product, parent, false);
-
         return new ProductHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ProductHolder holder, int position) {
+        holder.onBindProduct(products.get(position));
+    }
+
+    @Override
+    public int getItemCount() {
+        return products.size();
+    }
+
+    void updateProducts(List<Product> products) {
+        this.products = products;
+        notifyDataSetChanged();
     }
 
     class ProductHolder extends RecyclerView.ViewHolder {
 
-        final String COLLECTION_FOLDER = "PRODUCT_COLLECTIONS/hair/" + collectionTitle + "/";
         FirebaseStorage storage = FirebaseStorage.getInstance();
 
         ImageView ivProductImage;
@@ -73,17 +77,13 @@ public class ProductAdapter extends FirestoreRecyclerAdapter<Product, ProductAda
             tvProductTitle.setText(productTitle);
             tvProductPriceRange.setText(product.getPriceRange());
 
-            String productRef = COLLECTION_FOLDER + productTitle;
-            String productPhotoRef = productRef + ".png";
-            StorageReference storageRef = storage.getReference(productPhotoRef);
+            StorageReference storageRef = storage.getReference(product.getImageUrl());
 
             GlideApp.with(context)
                     .load(storageRef)
                     .into(ivProductImage);
 
-            itemView.setOnClickListener(v -> {
-                listener.onProductInteraction(productRef);
-            });
+            itemView.setOnClickListener(v -> listener.onProductInteraction(product));
         }
     }
 

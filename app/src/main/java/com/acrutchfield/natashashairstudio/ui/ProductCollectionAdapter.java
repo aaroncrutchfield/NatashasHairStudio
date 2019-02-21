@@ -9,34 +9,27 @@ import android.widget.TextView;
 
 import com.acrutchfield.natashashairstudio.R;
 import com.acrutchfield.natashashairstudio.model.ProductCollection;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ProductCollectionAdapter extends FirestoreRecyclerAdapter<ProductCollection, ProductCollectionAdapter.ProductCollectionHolder> {
+public class ProductCollectionAdapter extends RecyclerView.Adapter<ProductCollectionAdapter.ProductCollectionHolder> {
 
     private final CollectionInteractionListener listener;
     private final Context context;
+    private List<ProductCollection> productCollections;
 
     interface CollectionInteractionListener {
         void onCollectionInteraction(String productTitle);
     }
 
-    ProductCollectionAdapter(@NonNull FirestoreRecyclerOptions<ProductCollection> options,
-                             CollectionInteractionListener listener,
-                             Context context) {
-        super(options);
+    ProductCollectionAdapter(CollectionInteractionListener listener, Context context) {
         this.listener = listener;
         this.context = context;
-    }
-
-    @Override
-    protected void onBindViewHolder(@NonNull ProductCollectionHolder productCollectionHolder, int i, @NonNull ProductCollection collection) {
-        productCollectionHolder.onBindCollection(collection);
     }
 
     @NonNull
@@ -48,9 +41,23 @@ public class ProductCollectionAdapter extends FirestoreRecyclerAdapter<ProductCo
         return new ProductCollectionHolder(view);
     }
 
+    @Override
+    public void onBindViewHolder(@NonNull ProductCollectionHolder holder, int position) {
+        holder.onBindCollection(productCollections.get(position));
+    }
+
+    void updateProductCollections (List<ProductCollection> productCollections) {
+        this.productCollections = productCollections;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public int getItemCount() {
+        return productCollections.size();
+    }
+
     class ProductCollectionHolder extends RecyclerView.ViewHolder {
 
-        static final String HAIR_COLLECTIONS = "HAIR_COLLECTION_META_DATA/";
         FirebaseStorage storage = FirebaseStorage.getInstance();
 
         ImageView ivCollectionImage;
@@ -64,7 +71,7 @@ public class ProductCollectionAdapter extends FirestoreRecyclerAdapter<ProductCo
             tvCollectionTitle = itemView.findViewById(R.id.tv_collection_title);
 
             itemView.setOnClickListener(v -> {
-                String collectionTitle = tvCollectionTitle.getText().toString();
+                String collectionTitle = productCollections.get(getAdapterPosition()).getTitle();
                 listener.onCollectionInteraction(collectionTitle);
             });
         }
@@ -74,7 +81,7 @@ public class ProductCollectionAdapter extends FirestoreRecyclerAdapter<ProductCo
             tvCollectionTitle.setText(collectionTitle);
 
 
-            String collectionPhotoRef = HAIR_COLLECTIONS + collectionTitle + ".png";
+            String collectionPhotoRef = collection.getImageUrl();
             StorageReference storageRef = storage.getReference(collectionPhotoRef);
 
             GlideApp.with(context)

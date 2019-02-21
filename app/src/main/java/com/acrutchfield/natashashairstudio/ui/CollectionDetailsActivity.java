@@ -7,25 +7,19 @@ import android.view.MenuItem;
 
 import com.acrutchfield.natashashairstudio.R;
 import com.acrutchfield.natashashairstudio.model.Product;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
+import com.acrutchfield.natashashairstudio.viewmodel.ShopViewModel;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class CollectionDetailsActivity extends AppCompatActivity implements ProductAdapter.ProductInteractionLister {
 
     public static final String COLLECTION_TITLE = "collection_title";
-    public static final String BASE_REF = "/PRODUCT_COLLECTIONS/hair/";
-    public static final String EXTRA_PRODUCT_REF = "productRef";
-
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference productRef;
+    public static final String PRODUCT_EXTRA = "product";
 
     private ProductAdapter adapter;
 
@@ -43,9 +37,7 @@ public class CollectionDetailsActivity extends AppCompatActivity implements Prod
 
         Intent intent = getIntent();
         String collectionTitle = intent.getStringExtra(COLLECTION_TITLE);
-        String completeRef = BASE_REF + collectionTitle;
         Log.d("CollectionDetailsActivity", "onCreate: " + collectionTitle);
-        productRef = db.collection(completeRef);
 
         setupRecyclerView(collectionTitle);
     }
@@ -53,13 +45,11 @@ public class CollectionDetailsActivity extends AppCompatActivity implements Prod
     @Override
     public void onStart() {
         super.onStart();
-        adapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        adapter.stopListening();
     }
 
     @Override
@@ -73,22 +63,20 @@ public class CollectionDetailsActivity extends AppCompatActivity implements Prod
     }
 
     private void setupRecyclerView(String collectionTitle) {
-        Query query = productRef.orderBy("title");
-
-        FirestoreRecyclerOptions<Product> options = new FirestoreRecyclerOptions.Builder<Product>()
-                .setQuery(query, Product.class)
-                .build();
-
-        adapter = new ProductAdapter(options, collectionTitle, this, this);
+        adapter = new ProductAdapter( this, this);
         RecyclerView recyclerView = findViewById(R.id.rv_products);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setAdapter(adapter);
+
+        ShopViewModel viewModel = ViewModelProviders.of(this).get(ShopViewModel.class);
+        viewModel.getProductsLiveData(collectionTitle).observe(this,
+                products -> adapter.updateProducts(products));
     }
 
     @Override
-    public void onProductInteraction(String productRef) {
+    public void onProductInteraction(Product product) {
         Intent intent = new Intent(this, ProductDetailsActivity.class);
-        intent.putExtra(EXTRA_PRODUCT_REF, productRef);
+        intent.putExtra(PRODUCT_EXTRA, product);
         startActivity(intent);
     }
 }

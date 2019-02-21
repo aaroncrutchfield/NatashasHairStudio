@@ -15,10 +15,8 @@ import android.widget.Toast;
 
 import com.acrutchfield.natashashairstudio.R;
 import com.acrutchfield.natashashairstudio.model.Product;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -35,7 +33,7 @@ import androidx.appcompat.widget.Toolbar;
 
 public class ProductDetailsActivity extends AppCompatActivity {
 
-    public static final String EXTRA_PRODUCT_REF = "productRef";
+    public static final String PRODUCT_EXTRA = "product";
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
     FirebaseAuth auth;
@@ -63,38 +61,20 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
-        ImageView ivDetailImage = findViewById(R.id.iv_details_image);
-        Button btnWishList = findViewById(R.id.btn_wish_list);
         tvCollectionTitle = findViewById(R.id.tv_details_collection_title);
         tvProductTitle = findViewById(R.id.tv_details_title);
         tvPriceRange = findViewById(R.id.tv_price);
         spLengthOptions = findViewById(R.id.sp_length_options);
 
         Intent intent = getIntent();
-        String productRef = intent.getStringExtra(EXTRA_PRODUCT_REF);
-        StorageReference productPhotoRef = storage.getReference(productRef + ".png");
+        product = intent.getParcelableExtra(PRODUCT_EXTRA);
+        StorageReference productPhotoRef = storage.getReference(product.getImageUrl());
 
-        GlideApp.with(this)
-                .load(productPhotoRef)
-                .into(ivDetailImage);
-
-        String infoPath = "/" + productRef;
-        DocumentReference productInfoRef = db.document(infoPath);
-
-        productInfoRef.get().addOnCompleteListener(task -> updateUI(infoPath, task));
-
-        btnWishList.setOnClickListener(v -> {
-            if (auth.getCurrentUser() != null) {
-                wishlistPath = "/WISHLIST/" + auth.getCurrentUser().getUid() + "/default_list/";
-                addItemToWishList(infoPath);
-            } else {
-                notifyUser("You must log in first.");
-            }
-        });
+        updateUI(productPhotoRef);
     }
 
-    private void addItemToWishList(String infoPath) {
-        String wishlistRef = wishlistPath + getWishlistTitle(infoPath);
+    private void addItemToWishList() {
+        String wishlistRef = wishlistPath + getWishlistTitle();
         DocumentReference wishListdoc = db.document(wishlistRef);
 
         wishListdoc.set(product)
@@ -102,16 +82,27 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> notifyUser("Error. Try again later"));
     }
 
-    private void updateUI(String infoPath, Task<DocumentSnapshot> task) {
+    private void updateUI(StorageReference productPhotoRef) {
+        ImageView ivDetailImage = findViewById(R.id.iv_details_image);
+        Button btnWishList = findViewById(R.id.btn_wish_list);
+
+        GlideApp.with(this)
+                .load(productPhotoRef)
+                .into(ivDetailImage);
+
+        btnWishList.setOnClickListener(v -> {
+            if (auth.getCurrentUser() != null) {
+                wishlistPath = "/WISHLIST/" + auth.getCurrentUser().getUid() + "/default_list/";
+                addItemToWishList();
+            } else {
+                notifyUser("You must log in first.");
+            }
+        });
+
         Map<String, Integer> map = new HashMap<>();
-        DocumentSnapshot doc = task.getResult();
 
-        assert doc != null;
-        product = doc.toObject(Product.class);
-
-        assert product != null;
         tvProductTitle.setText(product.getTitle());
-        tvCollectionTitle.setText(getCollection(infoPath));
+        tvCollectionTitle.setText(product.getCollection());
 
         Map<String, Integer> length = product.getLength();
         Log.d("ProductDetailsActivity", "onCreate.length: " + length.toString());
@@ -151,14 +142,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private String getCollection(String infoPath) {
-        String[] paths = infoPath.split("/");
-        return paths[3];
-    }
-
-    private String getWishlistTitle(String infoPath) {
-        String[] paths = infoPath.split("/");
-        return paths[3] + "." + paths[4];
+    private String getWishlistTitle() {
+        return product.getCollection() + "." + product.getTitle();
     }
 
     private void notifyUser(String message) {

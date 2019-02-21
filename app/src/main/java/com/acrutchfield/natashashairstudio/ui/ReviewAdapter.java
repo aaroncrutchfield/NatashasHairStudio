@@ -45,6 +45,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
 
     void updateReviews(List<Review> reviews) {
         this.reviews = reviews;
+        notifyDataSetChanged();
     }
 
     @Override
