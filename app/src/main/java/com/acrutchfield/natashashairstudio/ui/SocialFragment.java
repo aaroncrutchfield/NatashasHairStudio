@@ -1,15 +1,22 @@
 package com.acrutchfield.natashashairstudio.ui;
 
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.acrutchfield.natashashairstudio.R;
+
+import java.util.Objects;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,52 +24,74 @@ import com.acrutchfield.natashashairstudio.R;
  * create an instance of this fragment.
  */
 public class SocialFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
 
     public SocialFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SocialFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SocialFragment newInstance(String param1, String param2) {
-        SocialFragment fragment = new SocialFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+
+    static SocialFragment newInstance() {
+        return new SocialFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_social, container, false);
+        View view = inflater.inflate(R.layout.fragment_social, container, false);
+        ImageView ivInstagram = view.findViewById(R.id.iv_instagram);
+        ImageView ivFacebook = view.findViewById(R.id.iv_facebook);
+
+        ivInstagram.setOnClickListener(v -> launchInstagram());
+        ivFacebook.setOnClickListener(v -> launchFacebook());
+
+        return view;
+    }
+
+    // https://stackoverflow.com/questions/21505941/intent-to-open-instagram-user-profile-on-android
+    private void launchInstagram() {
+        String instagramPageID = "natashashairstudio";
+        Uri appUri = Uri.parse("http://instagram.com/_u/" + instagramPageID);
+        Uri webUri = Uri.parse("http://instagram.com/" + instagramPageID);
+
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, appUri)
+                        .setPackage("com.instagram.android"));
+        } catch (ActivityNotFoundException e) {
+            startActivity(new Intent(Intent.ACTION_VIEW, webUri));
+        }
+    }
+
+    // https://gist.github.com/takeshiyako2/8b26bcdd8f2ad4da4fca
+    private void launchFacebook() {
+        String facebookPageID = "natashashairstudio1";
+
+        String facebookUrl = "https://www.facebook.com/" + facebookPageID;
+
+        String facebookUrlScheme = "fb://page/" + facebookPageID;
+
+        try {
+            int versionCode = Objects.requireNonNull(getContext())
+                    .getPackageManager()
+                    .getPackageInfo("com.facebook.katana", 0)
+                    .versionCode;
+
+            if (versionCode >= 3002850) {
+                Uri uri = Uri.parse("fb://facewebmodal/f?href=" + facebookUrl);
+                startActivity(new Intent(Intent.ACTION_VIEW, uri));
+            } else {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(facebookUrlScheme)));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(facebookUrl)));
+        }
     }
 
 }

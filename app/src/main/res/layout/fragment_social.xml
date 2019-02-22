@@ -1,14 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".ui.SocialFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Social" />
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/iv_throne"
+        android:layout_width="224dp"
+        android:layout_height="292dp"
+        android:contentDescription="@string/throne_image"
+        android:src="@drawable/ic_throne"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline5" />
+
+    <ImageView
+        android:id="@+id/iv_show_your_crown"
+        android:layout_width="172dp"
+        android:layout_height="201dp"
+        android:contentDescription="@string/show_your_crown_image"
+        android:src="@drawable/ic_show_your_crown"
+        app:layout_constraintStart_toEndOf="@+id/iv_throne"
+        app:layout_constraintTop_toTopOf="@+id/iv_throne" />
+
+    <ImageView
+        android:id="@+id/iv_instagram"
+        android:layout_width="170dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/instagram_page_link"
+        android:src="@drawable/ic_instagram"
+        app:layout_constraintStart_toEndOf="@+id/iv_throne"
+        app:layout_constraintTop_toBottomOf="@+id/iv_show_your_crown" />
+
+    <ImageView
+        android:id="@+id/iv_facebook"
+        android:layout_width="170dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/facebook_page_link"
+        android:src="@drawable/ic_facebook"
+        app:layout_constraintStart_toStartOf="@+id/iv_instagram"
+        app:layout_constraintTop_toBottomOf="@+id/iv_instagram" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+</androidx.constraintlayout.widget.ConstraintLayout>

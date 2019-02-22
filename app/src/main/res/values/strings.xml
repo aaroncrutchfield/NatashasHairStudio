@@ -7,4 +7,45 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="logo">Logo</string>
+    <string name="product_details_image">Product Details Image</string>
+    <string name="add_to_wishlist">Add to Wishlist</string>
+    <string name="length">Length</string>
+    <string name="rating">Rating</string>
+    <string name="service">Service</string>
+    <string name="details">Details</string>
+    <string name="profile_image">Profile image</string>
+    <string name="comments">Comments</string>
+    <string name="uid">uid</string>
+    <string name="id">id</string>
+    <string name="throne_image">Throne image</string>
+    <string name="show_your_crown_image">Show your crown image</string>
+    <string name="instagram_page_link">Instagram page link</string>
+    <string name="facebook_page_link">Facebook page link</string>
+    <string name="sign_in_with_google">Sign In with Google</string>
+    <string name="view_wish_list">View Wish List</string>
+    <string name="picture_outline">Picture outline</string>
+    <string name="login_picture">Login picture</string>
+    <string name="welcome">Welcome</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="signed_out">Signed Out</string>
+
+    <string-array name="ratings_array">
+        <item>5</item>
+        <item>4</item>
+        <item>3</item>
+        <item>2</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="ratings_services">
+        <item>Consultation</item>
+        <item>Basic Service</item>
+        <item>Braids</item>
+        <item>Chemical Service</item>
+        <item>For The Fellas</item>
+        <item>Sew-Ins</item>
+        <item>Wig Install</item>
+    </string-array>
 </resources>
