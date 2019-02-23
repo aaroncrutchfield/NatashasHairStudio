@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModel;
 
 public class ShopViewModel extends ViewModel {
     private static final String ORDER_BY_TITLE = "title";
-    private static final String PRODUCTS_BASE_REF = "/PRODUCT_COLLECTIONS/hair";
+    private static final String PRODUCTS_BASE_REF = "/PRODUCT_COLLECTIONS/hair/";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private CollectionReference collectionRef = db.collection("/HAIR_COLLECTION_META_DATA");

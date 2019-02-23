@@ -2,16 +2,21 @@ package com.acrutchfield.natashashairstudio.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.acrutchfield.natashashairstudio.R;
+import com.acrutchfield.natashashairstudio.model.ProductCollection;
 import com.acrutchfield.natashashairstudio.viewmodel.ShopViewModel;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,7 +38,13 @@ public class ShopFragment extends Fragment implements ProductCollectionAdapter.C
 
         View view = inflater.inflate(R.layout.fragment_shop, container, false);
         mViewModel = ViewModelProviders.of(this).get(ShopViewModel.class);
-        setupRecyclerView(view);
+        mViewModel.getCollectionLiveData().observe(this, new Observer<List<ProductCollection>>() {
+            @Override
+            public void onChanged(List<ProductCollection> productCollections) {
+                Log.d("ShopFragment", "onChanged: " + productCollections.toString());
+            }
+        });
+         setupRecyclerView(view);
         return view;
     }
 

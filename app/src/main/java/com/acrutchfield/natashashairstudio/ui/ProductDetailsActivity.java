@@ -108,6 +108,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         Log.d("ProductDetailsActivity", "onCreate.length: " + length.toString());
         length.forEach(map::put);
 
+
         List<String> sizes = new ArrayList<>(length.keySet());
         Collections.sort(sizes);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_spinner, sizes);

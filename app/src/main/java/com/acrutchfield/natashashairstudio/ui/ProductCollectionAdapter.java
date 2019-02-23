@@ -12,6 +12,7 @@ import com.acrutchfield.natashashairstudio.model.ProductCollection;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -21,7 +22,7 @@ public class ProductCollectionAdapter extends RecyclerView.Adapter<ProductCollec
 
     private final CollectionInteractionListener listener;
     private final Context context;
-    private List<ProductCollection> productCollections;
+    private List<ProductCollection> productCollections = new ArrayList<>();
 
     interface CollectionInteractionListener {
         void onCollectionInteraction(String productTitle);
@@ -53,6 +54,7 @@ public class ProductCollectionAdapter extends RecyclerView.Adapter<ProductCollec
 
     @Override
     public int getItemCount() {
+        if (productCollections == null) return 0;
         return productCollections.size();
     }
 
