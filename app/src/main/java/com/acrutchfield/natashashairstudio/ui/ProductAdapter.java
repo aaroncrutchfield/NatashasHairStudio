@@ -74,16 +74,15 @@ public class ProductAdapter extends FirestoreRecyclerAdapter<Product, ProductAda
             tvProductPriceRange.setText(product.getPriceRange());
 
             String productRef = COLLECTION_FOLDER + productTitle;
-            String productPhotoRef = productRef + ".png";
+            String productPhotoRef = product.getImageUrl();
             StorageReference storageRef = storage.getReference(productPhotoRef);
 
             GlideApp.with(context)
                     .load(storageRef)
                     .into(ivProductImage);
 
-            itemView.setOnClickListener(v -> {
-                listener.onProductInteraction(productRef);
-            });
+            itemView.setOnClickListener(v ->
+                    listener.onProductInteraction(productRef));
         }
     }
 

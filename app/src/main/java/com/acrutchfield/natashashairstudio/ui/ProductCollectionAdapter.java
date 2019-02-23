@@ -63,10 +63,7 @@ public class ProductCollectionAdapter extends FirestoreRecyclerAdapter<ProductCo
             ivCollectionImage = itemView.findViewById(R.id.iv_collection_image);
             tvCollectionTitle = itemView.findViewById(R.id.tv_collection_title);
 
-            itemView.setOnClickListener(v -> {
-                String collectionTitle = tvCollectionTitle.getText().toString();
-                listener.onCollectionInteraction(collectionTitle);
-            });
+
         }
 
         private void onBindCollection(ProductCollection collection) {
@@ -74,12 +71,15 @@ public class ProductCollectionAdapter extends FirestoreRecyclerAdapter<ProductCo
             tvCollectionTitle.setText(collectionTitle);
 
 
-            String collectionPhotoRef = HAIR_COLLECTIONS + collectionTitle + ".png";
+            String collectionPhotoRef = collection.getImageUrl();
             StorageReference storageRef = storage.getReference(collectionPhotoRef);
 
             GlideApp.with(context)
                     .load(storageRef)
                     .into(ivCollectionImage);
+
+            itemView.setOnClickListener(v ->
+                    listener.onCollectionInteraction(collection.getTitle()));
         }
     }
 }

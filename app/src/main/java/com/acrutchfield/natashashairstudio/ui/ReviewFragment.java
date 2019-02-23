@@ -48,7 +48,6 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
     private static final String REVIEW_DELETE_TITLE = "Delete Review";
     private static final String REVIEW_NOT_YOURS = "You can only delete reviews you created.";
     private static final String REVIEW_DELETE_CANCELED = "Delete canceled.";
-    private ReviewViewModel mViewModel;
     private FirebaseUser user;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -119,8 +118,6 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ReviewViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     private void promptForReview() {

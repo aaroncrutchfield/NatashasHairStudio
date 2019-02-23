@@ -2,15 +2,15 @@ package com.acrutchfield.natashashairstudio.model;
 
 public class ProductCollection {
     private String title;
-    private String image;
+    private String imageUrl;
 
     ProductCollection() {
 
     }
 
-    ProductCollection(String title, String image) {
+    ProductCollection(String title, String imageUrl) {
         this.title = title;
-        this.image = image;
+        this.imageUrl = imageUrl;
     }
 
     public String getTitle() {
@@ -21,11 +21,11 @@ public class ProductCollection {
         this.title = title;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

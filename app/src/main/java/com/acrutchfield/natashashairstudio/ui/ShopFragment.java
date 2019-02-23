@@ -24,7 +24,6 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ShopFragment extends Fragment implements ProductCollectionAdapter.CollectionInteractionListener {
 
     private static final String COLLECTION_TITLE = "collection_title";
-    private ShopViewModel mViewModel;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference hairMetaRef = db.collection("/HAIR_COLLECTION_META_DATA");
@@ -46,7 +45,6 @@ public class ShopFragment extends Fragment implements ProductCollectionAdapter.C
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ShopViewModel.class);
     }
 
 
