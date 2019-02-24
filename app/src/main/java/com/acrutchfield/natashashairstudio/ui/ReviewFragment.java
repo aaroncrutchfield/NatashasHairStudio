@@ -1,6 +1,8 @@
 package com.acrutchfield.natashashairstudio.ui;
 
 import android.annotation.SuppressLint;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +17,6 @@ import android.widget.Toast;
 
 import com.acrutchfield.natashashairstudio.R;
 import com.acrutchfield.natashashairstudio.model.Review;
-import com.acrutchfield.natashashairstudio.viewmodel.ReviewViewModel;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,7 +35,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -148,8 +148,10 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
                 notifyUser("Please add details before submitting");
             } else {
                 addReview(details);
-
                 alertDialog.dismiss();
+
+                // Add to Widget also
+                updateWidgetReviews();
             }
         });
     }
@@ -231,6 +233,9 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
                             adapter.notifyItemRemoved(position);
                             adapter.notifyDataSetChanged();
                             notifyUser(REVIEW_DELETED);
+
+                            // Remove from widget also
+                            updateWidgetReviews();
                         } else {
                             notifyUser(REVIEW_ERROR);
                         }
@@ -244,5 +249,13 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
             adapter.notifyDataSetChanged();
             notifyUser(REVIEW_NOT_YOURS);
         }
+    }
+
+    void updateWidgetReviews() {
+        AppWidgetManager manager = Objects.requireNonNull(getContext()).getSystemService(AppWidgetManager.class);
+        int [] ids = manager.getAppWidgetIds(new ComponentName(getContext(), ReviewsAppWidgetProvider.class));
+
+        ReviewsAppWidgetProvider.updateAppWidgets(getContext(), manager, ids);
+
     }
 }
