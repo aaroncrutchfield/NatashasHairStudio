@@ -61,10 +61,4 @@
         android:textSize="48sp"
         tools:text="5.0" />
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_gravity="bottom"
-        android:background="@color/grey" />
 </FrameLayout>
