@@ -19,13 +19,9 @@ public class ReviewsAppWidgetProvider extends AppWidgetProvider {
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.reviews_app_widget);
 
-//        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.logo2);
-//        views.setBitmap(R.id.iv_widget_logo, "setImageBitmap", bitmap);
-
         // Set the adapter on the listView
         Intent serviceIntent = new Intent(context, ReviewsWidgetService.class);
         serviceIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-//        serviceIntent.setData(Uri.parse(serviceIntent.toUri(Intent.URI_INTENT_SCHEME)));
 
         views.setRemoteAdapter(R.id.widget_list_reviews, serviceIntent);
 

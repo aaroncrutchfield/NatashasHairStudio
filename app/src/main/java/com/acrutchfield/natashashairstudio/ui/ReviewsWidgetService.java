@@ -1,8 +1,9 @@
 package com.acrutchfield.natashashairstudio.ui;
 
-import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -12,8 +13,11 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ReviewsWidgetService extends RemoteViewsService {
 
@@ -25,22 +29,19 @@ public class ReviewsWidgetService extends RemoteViewsService {
     private class ReviewsRemoteViewsFactory implements RemoteViewsFactory {
 
         private final Context mContext;
-        CollectionReference reviewsRef;
-        int appWidgetId;
+        private CollectionReference reviewsRef;
 
-        List<Review> mReviews = new ArrayList<>();
+        private List<Review> mReviews = new ArrayList<>();
 
         ReviewsRemoteViewsFactory(Context applicationContext, Intent intent) {
             mContext = applicationContext;
-
-            appWidgetId = intent.getIntExtra(
-                    AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
         }
 
         @Override
         public void onCreate() {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             reviewsRef = db.collection("/REVIEWS");
+            getReviews();
         }
 
         @Override
@@ -66,7 +67,7 @@ public class ReviewsWidgetService extends RemoteViewsService {
 
             String date = review.getDate();
             String clientName = review.getClientName();
-            String rating = review.getRating();
+            String rating = String.format("%s.0", review.getRating());
             String service = review.getService();
 
             views.setTextViewText(R.id.tv_widget_date, date);
@@ -74,15 +75,15 @@ public class ReviewsWidgetService extends RemoteViewsService {
             views.setTextViewText(R.id.tv_widget_rating, rating);
             views.setTextViewText(R.id.tv_widget_service, service);
 
-//            Bitmap bitmap = null;
+            Bitmap bitmap = null;
 
-//            try {
-//                URL url = new URL(review.getPhotoUrl());
-//                bitmap = BitmapFactory.decodeStream(url.openStream());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            views.setImageViewBitmap(R.id.iv_widget_profile, bitmap);
+            try {
+                URL url = new URL(review.getPhotoUrl());
+                bitmap = BitmapFactory.decodeStream(url.openStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            views.setImageViewBitmap(R.id.iv_widget_profile, bitmap);
 
             return views;
         }
@@ -107,18 +108,17 @@ public class ReviewsWidgetService extends RemoteViewsService {
             return true;
         }
 
+        // TODO: 2/24/19 get reviews in order by date
         void getReviews() {
             List<Review> reviews = new ArrayList<>();
             reviewsRef.get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
+                    for (QueryDocumentSnapshot document :
+                            Objects.requireNonNull(task.getResult())) {
                         reviews.add(document.toObject(Review.class));
                     }
-                    mReviews.clear();
-                    mReviews.addAll(reviews);
+                    mReviews = reviews;
                 }
-
-
             });
         }
     }
