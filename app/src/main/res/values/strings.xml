@@ -48,4 +48,5 @@
         <item>Sew-Ins</item>
         <item>Wig Install</item>
     </string-array>
+    <string name="add_widget">Add widget</string>
 </resources>

@@ -6,4 +6,5 @@
     <color name="darkGrey">#242424</color>
     <color name="grey">#676767</color>
     <color name="error_red">#B00020</color>
+    <color name="yellow_pressed">#FFD54F</color>
 </resources>

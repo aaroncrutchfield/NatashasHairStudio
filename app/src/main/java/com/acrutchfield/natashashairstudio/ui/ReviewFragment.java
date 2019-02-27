@@ -1,8 +1,6 @@
 package com.acrutchfield.natashashairstudio.ui;
 
 import android.annotation.SuppressLint;
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -150,8 +148,6 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
                 addReview(details);
                 alertDialog.dismiss();
 
-                // Add to Widget also
-                updateWidgetReviews();
             }
         });
     }
@@ -234,8 +230,6 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
                             adapter.notifyDataSetChanged();
                             notifyUser(REVIEW_DELETED);
 
-                            // Remove from widget also
-                            updateWidgetReviews();
                         } else {
                             notifyUser(REVIEW_ERROR);
                         }
@@ -249,13 +243,5 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
             adapter.notifyDataSetChanged();
             notifyUser(REVIEW_NOT_YOURS);
         }
-    }
-
-    void updateWidgetReviews() {
-        AppWidgetManager manager = Objects.requireNonNull(getContext()).getSystemService(AppWidgetManager.class);
-        int [] ids = manager.getAppWidgetIds(new ComponentName(getContext(), ReviewsAppWidgetProvider.class));
-
-        ReviewsAppWidgetProvider.updateAppWidgets(getContext(), manager, ids);
-
     }
 }

@@ -3,15 +3,10 @@ package com.acrutchfield.natashashairstudio.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.widget.Toast;
 
 import com.acrutchfield.natashashairstudio.R;
-import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.Arrays;
-import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -77,8 +72,32 @@ public class MainActivity extends AppCompatActivity {
             navigation.setSelectedItemId(R.id.navigation_shop);
         }
 
+        handleIntent();
+
         fabProfile.setOnClickListener(v -> launchProfileActivity());
 
+    }
+
+    private void handleIntent() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            String action = intent.getAction();
+            assert action != null;
+            switch (action) {
+                case "shop":
+                    navigation.setSelectedItemId(R.id.navigation_shop);
+                    break;
+                case "book":
+                    navigation.setSelectedItemId(R.id.navigation_book);
+                    break;
+                case "review":
+                    navigation.setSelectedItemId(R.id.navigation_review);
+                    break;
+                case "social":
+                    navigation.setSelectedItemId(R.id.navigation_social);
+                    break;
+            }
+        }
     }
 
     private void launchProfileActivity() {
@@ -87,38 +106,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
         outState.putInt(SELECTED_FRAGMENT, navigation.getSelectedItemId());
-    }
-
-    // TODO: 2/7/19 Setup signing in with Email
-    private void signIn() {
-        List<AuthUI.IdpConfig> providers = Arrays.asList(
-                new AuthUI.IdpConfig.GoogleBuilder().build()
-        );
-
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(providers)
-                        .setLogo(R.drawable.logo)
-                        .setTheme(R.style.AppTheme)
-                        .build(),
-                REQUEST_SIGN_IN
-        );
-    }
-
-    private void signOut() {
-        AuthUI.getInstance()
-                .signOut(this)
-                .addOnCompleteListener(task ->
-                        Toast.makeText(MainActivity.this, SIGNED_OUT, Toast.LENGTH_SHORT).show());
     }
 
 }
