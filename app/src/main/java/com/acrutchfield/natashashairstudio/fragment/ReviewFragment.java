@@ -56,6 +56,7 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
     private static final String MESSAGE_FEEDBACK = "We appreciate your feedback!";
     private static final String CHECK_NETWORK = "Failure. Check your network connection.";
     private static final String FORMAT_DATE = "MM/dd/yyyy";
+    public static final String LOG_IN_FIRST = "You must log in first";
 
     private FirebaseUser user;
 
@@ -65,6 +66,8 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
     private ReviewAdapter adapter;
 
     private Review.Builder reviewBuilder;
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+
 
     public static ReviewFragment newInstance() {
         return new ReviewFragment();
@@ -80,14 +83,14 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
         FloatingActionButton fabAddReview = view.findViewById(R.id.fab_add_review);
 
         fabAddReview.setOnClickListener(v -> {
-            // TODO: 2/13/19 check if logged on
-            // TODO: 2/13/19 if not, warn user
-            promptForReview();
+            user = auth.getCurrentUser();
+            if (user != null) {
+                promptForReview();
+            } else {
+                Toast.makeText(getContext(), LOG_IN_FIRST, Toast.LENGTH_SHORT).show();
+            }
 
         });
-
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
 
         return view;
     }
@@ -223,29 +226,37 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
 
     @Override
     public void promptForDelete(String uid, String id, int position) {
-        AlertDialog.Builder builder;
-        if (user.getUid().equals(uid)) {
-            builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()))
-                    .setTitle(REVIEW_DELETE_TITLE)
-                    .setMessage(REVIEW_CONFIRM_DELETE)
-                    .setPositiveButton(CONFIRM, (dialog, which) -> reviewsRef.document(id).delete().addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            adapter.notifyItemRemoved(position);
-                            adapter.notifyDataSetChanged();
-                            notifyUser(REVIEW_DELETED);
 
-                        } else {
-                            notifyUser(REVIEW_ERROR);
-                        }
-                    }))
-                    .setNegativeButton("Cancel", (dialog, which) -> {
-                        adapter.notifyDataSetChanged();
-                        notifyUser(REVIEW_DELETE_CANCELED);
-                    });
-            builder.create().show();
+        user = auth.getCurrentUser();
+
+        if (user != null) {
+            AlertDialog.Builder builder;
+            if (user.getUid().equals(uid)) {
+                builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()))
+                        .setTitle(REVIEW_DELETE_TITLE)
+                        .setMessage(REVIEW_CONFIRM_DELETE)
+                        .setPositiveButton(CONFIRM, (dialog, which) -> reviewsRef.document(id).delete().addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                adapter.notifyItemRemoved(position);
+                                adapter.notifyDataSetChanged();
+                                notifyUser(REVIEW_DELETED);
+
+                            } else {
+                                notifyUser(REVIEW_ERROR);
+                            }
+                        }))
+                        .setNegativeButton(CANCEL, (dialog, which) -> {
+                            adapter.notifyDataSetChanged();
+                            notifyUser(REVIEW_DELETE_CANCELED);
+                        });
+                builder.create().show();
+            } else {
+                adapter.notifyDataSetChanged();
+                notifyUser(REVIEW_NOT_YOURS);
+            }
         } else {
+            Toast.makeText(getContext(), LOG_IN_FIRST, Toast.LENGTH_SHORT).show();
             adapter.notifyDataSetChanged();
-            notifyUser(REVIEW_NOT_YOURS);
         }
     }
 }
