@@ -2,7 +2,6 @@ package com.acrutchfield.natashashairstudio.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -122,10 +121,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 .load(productPhotoRef)
                 .into(ivDetailImage);
 
-        Log.d("ProductDetailsActivity", "updateUI: " + product.getCollection());
 
         Map<String, Integer> length = product.getLength();
-        Log.d("ProductDetailsActivity", "onCreate.length: " + length.toString());
         length.forEach(map::put);
 
         List<String> sizes = new ArrayList<>(length.keySet());

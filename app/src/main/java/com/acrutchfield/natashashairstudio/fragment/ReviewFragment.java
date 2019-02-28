@@ -2,7 +2,6 @@ package com.acrutchfield.natashashairstudio.fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -198,7 +197,6 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 TextView tvRating = (TextView)view;
-                Log.d("ReviewFragment", "onItemSelected: " + tvRating.getText().toString());
                 reviewBuilder.rating(tvRating.getText().toString());
             }
 
@@ -212,7 +210,6 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 TextView tvService = (TextView)view;
-                Log.d("ReviewFragment", "onItemSelected: " + tvService.getText().toString());
                 reviewBuilder.service(tvService.getText().toString());
             }
 

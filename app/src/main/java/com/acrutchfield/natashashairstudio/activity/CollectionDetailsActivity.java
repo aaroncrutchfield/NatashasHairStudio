@@ -2,7 +2,6 @@ package com.acrutchfield.natashashairstudio.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.acrutchfield.natashashairstudio.R;
@@ -46,7 +45,6 @@ public class CollectionDetailsActivity extends AppCompatActivity implements Prod
         Intent intent = getIntent();
         String collectionTitle = intent.getStringExtra(COLLECTION_TITLE);
         String completeRef = BASE_REF + collectionTitle;
-        Log.d("CollectionDetailsActivity", "onCreate: " + collectionTitle);
         productRef = db.collection(completeRef);
 
         setupRecyclerView(collectionTitle);

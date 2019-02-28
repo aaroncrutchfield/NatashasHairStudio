@@ -8,7 +8,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.View;
 
 import com.acrutchfield.natashashairstudio.R;
@@ -92,8 +91,6 @@ public class DeleteItemCallback extends ItemTouchHelper.SimpleCallback {
         String uid = (String)viewHolder.itemView.getTag(R.string.uid);
         String id = (String)viewHolder.itemView.getTag(R.string.id);
         promptInterface.promptForDelete(uid, id, viewHolder.getAdapterPosition());
-        Log.d("ReviewFragment", "onSwiped.id=" + id);
-        Log.d("ReviewFragment", "onSwiped.uid=" + uid);
     }
 
     private void clearCanvas(Canvas c, float left, float top, float right, float bottom) {
