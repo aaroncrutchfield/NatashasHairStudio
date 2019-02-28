@@ -2,6 +2,7 @@ package com.acrutchfield.natashashairstudio.utils;
 
 import android.content.Context;
 
+import com.acrutchfield.natashashairstudio.service.AppointmentFirebaseJobService;
 import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.Driver;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;

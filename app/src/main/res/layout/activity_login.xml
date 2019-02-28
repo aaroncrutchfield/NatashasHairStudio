@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".ui.LoginActivity">
+    tools:context=".activity.LoginActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_login"
@@ -135,7 +135,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Appointment Reminder (7 days)"
+        android:text="@string/reminder_7_days"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textColor="@android:color/primary_text_dark"
         app:layout_constraintEnd_toEndOf="@+id/btn_view_wish_list"

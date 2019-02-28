@@ -1,4 +1,4 @@
-package com.acrutchfield.natashashairstudio.ui;
+package com.acrutchfield.natashashairstudio.utils;
 
 import android.content.Context;
 

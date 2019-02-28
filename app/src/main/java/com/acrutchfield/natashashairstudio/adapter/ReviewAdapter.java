@@ -1,4 +1,4 @@
-package com.acrutchfield.natashashairstudio.ui;
+package com.acrutchfield.natashashairstudio.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.acrutchfield.natashashairstudio.R;
 import com.acrutchfield.natashashairstudio.model.Review;
+import com.acrutchfield.natashashairstudio.utils.GlideApp;
 import com.bumptech.glide.request.RequestOptions;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -24,7 +25,7 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
     private final FirestoreRecyclerOptions<Review> options;
     private Context context;
 
-    ReviewAdapter(@NonNull FirestoreRecyclerOptions<Review> options, Context context) {
+    public ReviewAdapter(@NonNull FirestoreRecyclerOptions<Review> options, Context context) {
         super(options);
         this.options = options;
         this.context = context;

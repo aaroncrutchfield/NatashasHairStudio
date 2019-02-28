@@ -1,4 +1,4 @@
-package com.acrutchfield.natashashairstudio.ui;
+package com.acrutchfield.natashashairstudio.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.acrutchfield.natashashairstudio.R;
 import com.acrutchfield.natashashairstudio.model.ProductCollection;
+import com.acrutchfield.natashashairstudio.utils.GlideApp;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.storage.FirebaseStorage;
@@ -22,13 +23,13 @@ public class ProductCollectionAdapter extends FirestoreRecyclerAdapter<ProductCo
     private final CollectionInteractionListener listener;
     private final Context context;
 
-    interface CollectionInteractionListener {
+    public interface CollectionInteractionListener {
         void onCollectionInteraction(String productTitle);
     }
 
-    ProductCollectionAdapter(@NonNull FirestoreRecyclerOptions<ProductCollection> options,
-                             CollectionInteractionListener listener,
-                             Context context) {
+    public ProductCollectionAdapter(@NonNull FirestoreRecyclerOptions<ProductCollection> options,
+                                    CollectionInteractionListener listener,
+                                    Context context) {
         super(options);
         this.listener = listener;
         this.context = context;

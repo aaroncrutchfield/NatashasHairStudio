@@ -1,4 +1,4 @@
-package com.acrutchfield.natashashairstudio.ui;
+package com.acrutchfield.natashashairstudio.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.acrutchfield.natashashairstudio.R;
+import com.acrutchfield.natashashairstudio.adapter.ProductAdapter;
 import com.acrutchfield.natashashairstudio.model.Product;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;

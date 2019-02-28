@@ -1,4 +1,4 @@
-package com.acrutchfield.natashashairstudio.ui;
+package com.acrutchfield.natashashairstudio.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.acrutchfield.natashashairstudio.R;
+import com.acrutchfield.natashashairstudio.utils.GlideApp;
 import com.acrutchfield.natashashairstudio.utils.SharedPrefs;
 import com.bumptech.glide.request.RequestOptions;
 import com.firebase.ui.auth.AuthUI;

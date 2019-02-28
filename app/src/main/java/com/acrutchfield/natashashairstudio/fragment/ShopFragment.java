@@ -1,4 +1,4 @@
-package com.acrutchfield.natashashairstudio.ui;
+package com.acrutchfield.natashashairstudio.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,8 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.acrutchfield.natashashairstudio.R;
+import com.acrutchfield.natashashairstudio.activity.CollectionDetailsActivity;
+import com.acrutchfield.natashashairstudio.adapter.ProductCollectionAdapter;
 import com.acrutchfield.natashashairstudio.model.ProductCollection;
-import com.acrutchfield.natashashairstudio.viewmodel.ShopViewModel;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -17,7 +18,6 @@ import com.google.firebase.firestore.Query;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,7 +29,7 @@ public class ShopFragment extends Fragment implements ProductCollectionAdapter.C
     private CollectionReference hairMetaRef = db.collection("/HAIR_COLLECTION_META_DATA");
     private ProductCollectionAdapter adapter;
 
-    static ShopFragment newInstance() {
+    public static ShopFragment newInstance() {
         return new ShopFragment();
     }
 

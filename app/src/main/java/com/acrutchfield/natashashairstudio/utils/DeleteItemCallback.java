@@ -1,4 +1,4 @@
-package com.acrutchfield.natashashairstudio.ui;
+package com.acrutchfield.natashashairstudio.utils;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -28,11 +28,11 @@ public class DeleteItemCallback extends ItemTouchHelper.SimpleCallback {
     private Context context;
     private DeletePromptInterface promptInterface;
 
-    interface DeletePromptInterface {
+    public interface DeletePromptInterface {
         void promptForDelete(String uid, String id, int position);
     }
 
-    DeleteItemCallback(Context context, DeletePromptInterface promptInterface, int dragDirs, int swipeDirs){
+    public DeleteItemCallback(Context context, DeletePromptInterface promptInterface, int dragDirs, int swipeDirs){
         super(dragDirs, swipeDirs);
         this.context = context;
         this.promptInterface = promptInterface;

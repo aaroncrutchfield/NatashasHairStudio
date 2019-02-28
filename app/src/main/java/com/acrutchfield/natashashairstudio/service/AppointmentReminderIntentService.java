@@ -1,8 +1,9 @@
-package com.acrutchfield.natashashairstudio.utils;
+package com.acrutchfield.natashashairstudio.service;
 
 import android.app.IntentService;
 import android.content.Intent;
 
+import com.acrutchfield.natashashairstudio.utils.AppointmentReminderTask;
 
 
 public class AppointmentReminderIntentService extends IntentService {

@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 // https://github.com/udacity/ud851-Exercises/blob/student/Lesson09b-ToDo-List-AAC/
 // T09b.04-Solution-Executors/app/src/main/java/com/example/android/todolist/AppExecutors.java
 
-class AppExecutors {
+public class AppExecutors {
 
     // For Singleton instantiation
     private static final Object LOCK = new Object();
@@ -24,7 +24,7 @@ class AppExecutors {
 
     }
 
-    static AppExecutors getInstance() {
+    public static AppExecutors getInstance() {
         if (sInstance == null) {
             synchronized (LOCK) {
                 sInstance = new AppExecutors(Executors.newSingleThreadExecutor());
@@ -33,7 +33,7 @@ class AppExecutors {
         return sInstance;
     }
 
-    Executor diskIO() {
+    public Executor diskIO() {
         return diskIO;
     }
 

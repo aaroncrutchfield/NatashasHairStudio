@@ -1,4 +1,4 @@
-package com.acrutchfield.natashashairstudio.ui;
+package com.acrutchfield.natashashairstudio.fragment;
 
 
 import android.content.ActivityNotFoundException;
@@ -32,7 +32,7 @@ public class SocialFragment extends Fragment {
     }
 
 
-    static SocialFragment newInstance() {
+    public static SocialFragment newInstance() {
         return new SocialFragment();
     }
 

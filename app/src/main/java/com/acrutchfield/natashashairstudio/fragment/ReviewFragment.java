@@ -1,4 +1,4 @@
-package com.acrutchfield.natashashairstudio.ui;
+package com.acrutchfield.natashashairstudio.fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -14,7 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.acrutchfield.natashashairstudio.R;
+import com.acrutchfield.natashashairstudio.adapter.ReviewAdapter;
 import com.acrutchfield.natashashairstudio.model.Review;
+import com.acrutchfield.natashashairstudio.utils.DeleteItemCallback;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,7 +57,7 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
 
     private Review.Builder reviewBuilder;
 
-    static ReviewFragment newInstance() {
+    public static ReviewFragment newInstance() {
         return new ReviewFragment();
     }
 

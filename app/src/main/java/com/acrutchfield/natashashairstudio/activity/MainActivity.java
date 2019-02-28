@@ -1,10 +1,14 @@
-package com.acrutchfield.natashashairstudio.ui;
+package com.acrutchfield.natashashairstudio.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 
 import com.acrutchfield.natashashairstudio.R;
+import com.acrutchfield.natashashairstudio.fragment.BookAppointmentFragment;
+import com.acrutchfield.natashashairstudio.fragment.ReviewFragment;
+import com.acrutchfield.natashashairstudio.fragment.ShopFragment;
+import com.acrutchfield.natashashairstudio.fragment.SocialFragment;
 import com.acrutchfield.natashashairstudio.utils.AppointmentReminderTask;
 import com.acrutchfield.natashashairstudio.utils.AppointmentReminderUtils;
 import com.acrutchfield.natashashairstudio.utils.SharedPrefs;
@@ -20,11 +24,6 @@ import androidx.fragment.app.FragmentTransaction;
 public class MainActivity extends AppCompatActivity {
 
 
-    // TODO: 2/7/19 Check if the user is signed in
-    // TODO: 2/7/19 Prompt the user to sign in if they aren't already
-    // TODO: 2/7/19 Find a way to show the logo by default if the user isn't signed in
-    private static final int REQUEST_SIGN_IN = 0;
-    public static final String SIGNED_OUT = "Signed Out";
     public static final String SELECTED_FRAGMENT = "selected_fragment";
     private static final String URL_STRING = "https://app.acuityscheduling.com/schedule.php?owner=11362345";
 
@@ -78,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         if (SharedPrefs.getReminder(this)) {
             AppointmentReminderUtils.scheduleAppointmentReminder(this);
         } else {
-            // TODO: 2/28/19 debug cancellations to reassure no errors
             AppointmentReminderUtils.cancelAppointmentReminder(this);
         }
 

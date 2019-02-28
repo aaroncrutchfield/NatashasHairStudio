@@ -1,4 +1,4 @@
-package com.acrutchfield.natashashairstudio.ui;
+package com.acrutchfield.natashashairstudio.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.acrutchfield.natashashairstudio.R;
+import com.acrutchfield.natashashairstudio.activity.MainActivity;
 
 /**
  * Implementation of App Widget functionality.
@@ -48,7 +49,7 @@ public class LauncherAppWidget extends AppWidgetProvider {
     }
 
     private static PendingIntent getPendingIntent(Context context, String action, int requestCode) {
-        Intent intent = new Intent(context ,MainActivity.class);
+        Intent intent = new Intent(context , MainActivity.class);
         intent.setAction(action);
 
         return PendingIntent.getActivity(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);

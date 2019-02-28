@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.os.Build;
 
 import com.acrutchfield.natashashairstudio.R;
-import com.acrutchfield.natashashairstudio.ui.MainActivity;
+import com.acrutchfield.natashashairstudio.activity.MainActivity;
 
 import androidx.core.app.NotificationCompat;
 

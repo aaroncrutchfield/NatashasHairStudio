@@ -49,4 +49,5 @@
         <item>Wig Install</item>
     </string-array>
     <string name="add_widget">Add widget</string>
+    <string name="reminder_7_days">Appointment Reminder (7 days)</string>
 </resources>

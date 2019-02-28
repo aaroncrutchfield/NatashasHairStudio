@@ -1,5 +1,9 @@
-package com.acrutchfield.natashashairstudio.utils;
+package com.acrutchfield.natashashairstudio.service;
 
+import com.acrutchfield.natashashairstudio.utils.AppExecutors;
+import com.acrutchfield.natashashairstudio.utils.AppointmentReminderTask;
+import com.acrutchfield.natashashairstudio.utils.AppointmentReminderUtils;
+import com.acrutchfield.natashashairstudio.utils.SharedPrefs;
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
 
