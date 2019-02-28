@@ -96,7 +96,7 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
     }
 
     private void setupRecyclerView(View view) {
-        Query query = reviewsRef.orderBy("date");
+        Query query = reviewsRef.orderBy("date", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<Review> options = new FirestoreRecyclerOptions.Builder<Review>()
                 .setQuery(query, Review.class)
