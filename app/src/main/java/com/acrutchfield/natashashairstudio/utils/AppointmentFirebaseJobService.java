@@ -22,22 +22,6 @@ public class AppointmentFirebaseJobService extends JobService {
             jobFinished(job, false);
         });
 
-//        mBackgroundTask = new AsyncTask() {
-//            @Override
-//            protected Object doInBackground(Object[] objects) {
-//                Context context = AppointmentFirebaseJobService.this;
-//                AppointmentReminderTask.execute(context, AppointmentReminderTask.ACTION_APPOINTMENT_REMINDER);
-//                return null;
-//            }
-//
-//            @Override
-//            protected void onPostExecute(Object o) {
-//                jobFinished(job, false);
-//            }
-//        };
-//
-//        mBackgroundTask.execute();
-
         return true;
     }
 
