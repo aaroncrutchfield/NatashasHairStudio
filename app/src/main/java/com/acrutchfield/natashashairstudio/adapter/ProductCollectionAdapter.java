@@ -51,7 +51,6 @@ public class ProductCollectionAdapter extends FirestoreRecyclerAdapter<ProductCo
 
     class ProductCollectionHolder extends RecyclerView.ViewHolder {
 
-        static final String HAIR_COLLECTIONS = "HAIR_COLLECTION_META_DATA/";
         FirebaseStorage storage = FirebaseStorage.getInstance();
 
         ImageView ivCollectionImage;

@@ -20,8 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapter.ReviewHolder> {
 
 
-    public static final int KEY_ID = 1;
-    public static final int KEY_UID = 2;
     private final FirestoreRecyclerOptions<Review> options;
     private Context context;
 
@@ -46,6 +44,8 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
 
     class ReviewHolder extends RecyclerView.ViewHolder {
 
+        static final String RATING_FORMAT = "%s.0";
+
         ImageView ivProfile;
         TextView tvService;
         TextView tvRating;
@@ -66,7 +66,7 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
 
         void onBindReview(Review review, int position) {
             tvService.setText(review.getService());
-            String rating = String.format("%s.0", review.getRating());
+            String rating = String.format(RATING_FORMAT, review.getRating());
             tvRating.setText(rating);
             tvDetails.setText(review.getDetails());
             tvDate.setText(review.getDate());

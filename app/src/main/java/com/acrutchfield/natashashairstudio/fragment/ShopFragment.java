@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ShopFragment extends Fragment implements ProductCollectionAdapter.CollectionInteractionListener {
 
     private static final String COLLECTION_TITLE = "collection_title";
+    private static final String TITLE = "title";
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference hairMetaRef = db.collection("/HAIR_COLLECTION_META_DATA");
@@ -61,7 +62,7 @@ public class ShopFragment extends Fragment implements ProductCollectionAdapter.C
     }
 
     private void setupRecyclerView(View view) {
-        Query query = hairMetaRef.orderBy("title");
+        Query query = hairMetaRef.orderBy(TITLE);
 
         FirestoreRecyclerOptions<ProductCollection> options = new FirestoreRecyclerOptions.Builder<ProductCollection>()
                 .setQuery(query, ProductCollection.class)

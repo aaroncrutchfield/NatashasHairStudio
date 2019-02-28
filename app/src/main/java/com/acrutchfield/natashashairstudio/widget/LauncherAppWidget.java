@@ -15,16 +15,25 @@ import com.acrutchfield.natashashairstudio.activity.MainActivity;
  */
 public class LauncherAppWidget extends AppWidgetProvider {
 
+    public static final String ACTION_SHOP = "shop";
+    public static final String ACTION_BOOK = "book";
+    public static final String ACTION_REVIEW = "review";
+    public static final String ACTION_SOCIAL = "social";
+    public static final int RC_SHOP = 101;
+    public static final int RC_BOOK = 102;
+    public static final int RC_REVIEW = 103;
+    public static final int RC_SOCIAL = 104;
+
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.launcher_app_widget);
 
-        views.setOnClickPendingIntent(R.id.ShopButton, getPendingIntent(context, "shop", 101));
-        views.setOnClickPendingIntent(R.id.BookButton, getPendingIntent(context, "book", 102));
-        views.setOnClickPendingIntent(R.id.ReviewButton, getPendingIntent(context, "review", 103));
-        views.setOnClickPendingIntent(R.id.SocialButton, getPendingIntent(context, "social", 104));
+        views.setOnClickPendingIntent(R.id.ShopButton, getPendingIntent(context, ACTION_SHOP, RC_SHOP));
+        views.setOnClickPendingIntent(R.id.BookButton, getPendingIntent(context, ACTION_BOOK, RC_BOOK));
+        views.setOnClickPendingIntent(R.id.ReviewButton, getPendingIntent(context, ACTION_REVIEW, RC_REVIEW));
+        views.setOnClickPendingIntent(R.id.SocialButton, getPendingIntent(context, ACTION_SOCIAL, RC_SOCIAL));
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);

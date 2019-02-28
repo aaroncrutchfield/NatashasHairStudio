@@ -48,6 +48,16 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
     private static final String REVIEW_DELETE_TITLE = "Delete Review";
     private static final String REVIEW_NOT_YOURS = "You can only delete reviews you created.";
     private static final String REVIEW_DELETE_CANCELED = "Delete canceled.";
+    private static final String DATE = "date";
+    private static final String REVIEW = "Review";
+    private static final String SUBMIT = "Submit";
+    private static final String CANCEL = "Cancel";
+    private static final String MESSAGE_CANCELED = "Canceled";
+    private static final String ADD_DETAILS = "Please add details before submitting";
+    private static final String MESSAGE_FEEDBACK = "We appreciate your feedback!";
+    private static final String CHECK_NETWORK = "Failure. Check your network connection.";
+    private static final String FORMAT_DATE = "MM/dd/yyyy";
+
     private FirebaseUser user;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -96,7 +106,7 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
     }
 
     private void setupRecyclerView(View view) {
-        Query query = reviewsRef.orderBy("date", Query.Direction.DESCENDING);
+        Query query = reviewsRef.orderBy(DATE, Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<Review> options = new FirestoreRecyclerOptions.Builder<Review>()
                 .setQuery(query, Review.class)
@@ -133,19 +143,19 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
 
         setupDialogSpinners(spRating, spService);
 
-        AlertDialog alertDialog = builder.setTitle("Review")
+        AlertDialog alertDialog = builder.setTitle(REVIEW)
                 .setView(view)
-                .setPositiveButton("Submit", (dialog, which) -> {
+                .setPositiveButton(SUBMIT, (dialog, which) -> {
 
                 })
-                .setNegativeButton("Cancel", (dialog, which) -> notifyUser("Canceled"))
+                .setNegativeButton(CANCEL, (dialog, which) -> notifyUser(MESSAGE_CANCELED))
                 .create();
         alertDialog.show();
 
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             String details = etDetails.getText().toString();
             if (details.trim().equals("")) {
-                notifyUser("Please add details before submitting");
+                notifyUser(ADD_DETAILS);
             } else {
                 addReview(details);
                 alertDialog.dismiss();
@@ -165,9 +175,9 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
         Review review = reviewBuilder.build();
         reviewsRef.add(review)
                 .addOnSuccessListener(
-                        documentReference -> notifyUser("We appreciate your feedback!"))
+                        documentReference -> notifyUser(MESSAGE_FEEDBACK))
                 .addOnFailureListener(
-                        e -> notifyUser("Failure. Check your network connection."));
+                        e -> notifyUser(CHECK_NETWORK));
     }
 
     private void notifyUser(String message) {
@@ -176,7 +186,7 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
 
     private String getTodaysDate() {
         Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_DATE, Locale.US);
         return sdf.format(date);
     }
 

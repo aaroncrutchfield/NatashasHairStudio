@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     public static final String SIGNED_IN = "Signed In";
     public static final String REMINDER_SET = "Appointment reminder set for 7 days.";
     public static final String REMINDER_REMOVED = "Appointment reminder removed.";
+    public static final String COLOR_GREY = "#676767";
 
     private TextView tvWelcome;
     private TextView tvSignedOut;
@@ -123,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
                 .apply(RequestOptions.circleCropTransform())
                 .into(ivLoginPicture);
 
-        int backgoundColor = Color.parseColor("#676767");
+        int backgoundColor = Color.parseColor(COLOR_GREY);
         ColorDrawable drawable = new ColorDrawable(backgoundColor);
 
         GlideApp.with(this)
@@ -147,7 +148,7 @@ public class LoginActivity extends AppCompatActivity {
                 .apply(RequestOptions.circleCropTransform())
                 .into(ivLoginPicture);
 
-        int backgoundColor = Color.parseColor("#676767");
+        int backgoundColor = Color.parseColor(COLOR_GREY);
         ColorDrawable drawable = new ColorDrawable(backgoundColor);
 
         GlideApp.with(this)

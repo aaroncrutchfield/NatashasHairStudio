@@ -23,8 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 // https://medium.com/@kitek/recyclerview-swipe-to-delete-easier-than-you-thought-cff67ff5e5f6
 public class DeleteItemCallback extends ItemTouchHelper.SimpleCallback {
 
-    private static final int KEY_ID = 1;
-    private static final int KEY_UID = 2;
+    private static final String COLOR_RED = "#f44336";
     private Context context;
     private DeletePromptInterface promptInterface;
 
@@ -62,7 +61,7 @@ public class DeleteItemCallback extends ItemTouchHelper.SimpleCallback {
         int itemHeight = bottom - top;
         boolean isCanceled = dX == 0f && !isCurrentlyActive;
         ColorDrawable background = new ColorDrawable();
-        int backgroundColor = Color.parseColor("#f44336");
+        int backgroundColor = Color.parseColor(COLOR_RED);
 
         int deleteIconTop = top + (itemHeight - intrinsicHeight) / 2;
         int deleteIconMargin = (itemHeight - intrinsicHeight) / 2;

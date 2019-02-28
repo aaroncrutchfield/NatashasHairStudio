@@ -18,13 +18,8 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SocialFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class SocialFragment extends Fragment {
 
+public class SocialFragment extends Fragment {
 
 
     public SocialFragment() {
@@ -72,9 +67,7 @@ public class SocialFragment extends Fragment {
     // https://gist.github.com/takeshiyako2/8b26bcdd8f2ad4da4fca
     private void launchFacebook() {
         String facebookPageID = "natashashairstudio1";
-
         String facebookUrl = "https://www.facebook.com/" + facebookPageID;
-
         String facebookUrlScheme = "fb://page/" + facebookPageID;
 
         try {

@@ -37,6 +37,12 @@ import androidx.appcompat.widget.Toolbar;
 public class ProductDetailsActivity extends AppCompatActivity {
 
     public static final String EXTRA_PRODUCT_REF = "productRef";
+    public static final String WISHLIST = "/WISHLIST/";
+    public static final String DEFAULT_LIST = "/default_list/";
+    public static final String LOG_IN_FIRST = "You must log in first.";
+    public static final String ADDED_TO_WISH_LIST = "Added to wish list";
+    public static final String TRY_AGAIN = "Error. Try again later";
+    public static final String FORMAT_MONEY = "$%s.00";
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
 
@@ -82,10 +88,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         btnWishList.setOnClickListener(v -> {
             if (auth.getCurrentUser() != null) {
-                wishlistPath = "/WISHLIST/" + auth.getCurrentUser().getUid() + "/default_list/";
+                wishlistPath = WISHLIST + auth.getCurrentUser().getUid() + DEFAULT_LIST;
                 addItemToWishList();
             } else {
-                notifyUser("You must log in first.");
+                notifyUser(LOG_IN_FIRST);
             }
         });
     }
@@ -95,8 +101,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
         DocumentReference wishListdoc = db.document(wishlistRef);
 
         wishListdoc.set(product)
-                .addOnCompleteListener(task -> notifyUser("Added to wish list"))
-                .addOnFailureListener(e -> notifyUser("Error. Try again later"));
+                .addOnCompleteListener(task -> notifyUser(ADDED_TO_WISH_LIST))
+                .addOnFailureListener(e -> notifyUser(TRY_AGAIN));
     }
 
     private void updateUI(Task<DocumentSnapshot> task) {
@@ -135,7 +141,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 String key = tv.getText().toString();
                 Integer price = map.get(key);
 
-                String priceString = String.format("$%s.00",price);
+                String priceString = String.format(FORMAT_MONEY,price);
                 tvPriceRange.setText(priceString);
             }
 
