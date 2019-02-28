@@ -70,4 +70,12 @@
         <item name="android:elevation">4dp</item>
     </style>
 
+    <style name="small_image_view">
+        <item name="android:layout_width">72dp</item>
+        <item name="android:layout_height">72dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:contentDescription">@string/product_image</item>
+    </style>
+
 </resources>
