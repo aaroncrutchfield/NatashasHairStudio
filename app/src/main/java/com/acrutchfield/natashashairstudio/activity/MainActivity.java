@@ -1,8 +1,11 @@
 package com.acrutchfield.natashashairstudio.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.provider.Settings;
+import android.widget.Toast;
 
 import com.acrutchfield.natashashairstudio.R;
 import com.acrutchfield.natashashairstudio.fragment.BookAppointmentFragment;
@@ -12,6 +15,7 @@ import com.acrutchfield.natashashairstudio.fragment.SocialFragment;
 import com.acrutchfield.natashashairstudio.utils.AppointmentReminderTask;
 import com.acrutchfield.natashashairstudio.utils.AppointmentReminderUtils;
 import com.acrutchfield.natashashairstudio.utils.SharedPrefs;
+import com.acrutchfield.natashashairstudio.utils.Utils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -30,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
     private static final String ACTION_BOOK = "book";
     private static final String ACTION_REVIEW = "review";
     private static final String ACTION_SOCIAL = "social";
+    private static final String OFFLINE = "Offline";
+    private static final String MESSAGE_NETWORK_WARNING = "You must be online to use this app.";
+    private static final String NETWORK_SETTINGS = "Network Settings";
+    private static final String EXIT = "Exit";
+    public static final String TRY_AGAIN_LATER = "Please connect to a network and try again later.";
 
     private FragmentManager fragmentManager;
     private BottomNavigationView navigation;
@@ -68,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
         navigation = findViewById(R.id.navigation);
         FloatingActionButton fabProfile = findViewById(R.id.fab_profile);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        checkConnectionStatus();
 
         fragmentManager = getSupportFragmentManager();
 
@@ -122,6 +133,26 @@ public class MainActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
         outState.putInt(SELECTED_FRAGMENT, navigation.getSelectedItemId());
+    }
+
+    private boolean checkConnectionStatus() {
+        //Check the connection status
+        boolean connected = Utils.isOnline(this);
+        //If there is no network connection, alert the user and prompt for next action
+        if (!connected) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(this)
+                    .setTitle(OFFLINE)
+                    .setMessage(MESSAGE_NETWORK_WARNING)
+                    .setPositiveButton(NETWORK_SETTINGS, (dialogInterface, i) ->
+                            startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS)))
+                    .setNegativeButton(EXIT, (dialogInterface, i) -> {
+                        Toast.makeText(MainActivity.this, TRY_AGAIN_LATER, Toast.LENGTH_SHORT).show();
+                        finish();
+                    });
+            final AlertDialog dialog = alert.create();
+            dialog.show();
+        }
+        return connected;
     }
 
 }

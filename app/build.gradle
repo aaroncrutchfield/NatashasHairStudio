@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-//    signingConfigs {
-//        config {
-//            keyAlias 'key0'
-//            keyPassword 'aceboogie64'
-//            storeFile file('/Users/aaroncrutchfield/Documents/keystore/myKeystore')
-//            storePassword 'boogie4745'
-//        }
-//    }
+    signingConfigs {
+        config {
+            keyAlias 'key0'
+            keyPassword 'aceboogie64'
+            storeFile file('keystore/myKeystore')
+            storePassword 'boogie4745'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.acrutchfield.natashashairstudio"
@@ -18,17 +18,17 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        // signingConfig signingConfigs.config
+         signingConfig signingConfigs.config
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.config
+            signingConfig signingConfigs.config
             debuggable true
         }
         debug {
-//            signingConfig signingConfigs.config
+            signingConfig signingConfigs.config
         }
     }
     compileOptions {
