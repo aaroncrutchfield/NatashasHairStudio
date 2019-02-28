@@ -9,13 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.WishListActivity"></activity>
+
         <service
             android:name=".service.AppointmentReminderIntentService"
-            android:exported="false"/>
-        <service android:name=".service.AppointmentFirebaseJobService"
+            android:exported="false" />
+        <service
+            android:name=".service.AppointmentFirebaseJobService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECTUTE"/>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECTUTE" />
             </intent-filter>
         </service>
 

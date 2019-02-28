@@ -32,13 +32,11 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_product"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="?android:attr/windowBackground"
-        android:elevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="80dp"
+        style="@style/activity_toolbar">
 
         <ImageView
             android:layout_width="wrap_content"
