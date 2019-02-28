@@ -21,8 +21,8 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ProductAdapter extends FirestoreRecyclerAdapter<Product, ProductAdapter.ProductHolder> {
 
     private final ProductInteractionLister listener;
-    private String collectionTitle;
-    private Context context;
+    private final String collectionTitle;
+    private final Context context;
 
     public interface ProductInteractionLister {
         void onProductInteraction(String fileRef);
@@ -55,11 +55,11 @@ public class ProductAdapter extends FirestoreRecyclerAdapter<Product, ProductAda
     class ProductHolder extends RecyclerView.ViewHolder {
 
         final String COLLECTION_FOLDER = "PRODUCT_COLLECTIONS/hair/" + collectionTitle + "/";
-        FirebaseStorage storage = FirebaseStorage.getInstance();
+        final FirebaseStorage storage = FirebaseStorage.getInstance();
 
-        ImageView ivProductImage;
-        TextView tvProductTitle;
-        TextView tvProductPriceRange;
+        final ImageView ivProductImage;
+        final TextView tvProductTitle;
+        final TextView tvProductPriceRange;
 
         ProductHolder(@NonNull View itemView) {
             super(itemView);

@@ -26,8 +26,8 @@ public class ShopFragment extends Fragment implements ProductCollectionAdapter.C
     private static final String COLLECTION_TITLE = "collection_title";
     private static final String TITLE = "title";
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference hairMetaRef = db.collection("/HAIR_COLLECTION_META_DATA");
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final CollectionReference hairMetaRef = db.collection("/HAIR_COLLECTION_META_DATA");
     private ProductCollectionAdapter adapter;
 
     public static ShopFragment newInstance() {
@@ -41,11 +41,6 @@ public class ShopFragment extends Fragment implements ProductCollectionAdapter.C
         View view = inflater.inflate(R.layout.fragment_shop, container, false);
         setupRecyclerView(view);
         return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
     }
 
 

@@ -21,11 +21,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class CollectionDetailsActivity extends AppCompatActivity implements ProductAdapter.ProductInteractionLister {
 
-    public static final String COLLECTION_TITLE = "collection_title";
-    public static final String BASE_REF = "/PRODUCT_COLLECTIONS/hair/";
-    public static final String EXTRA_PRODUCT_REF = "productRef";
+    private static final String COLLECTION_TITLE = "collection_title";
+    private static final String BASE_REF = "/PRODUCT_COLLECTIONS/hair/";
+    private static final String EXTRA_PRODUCT_REF = "productRef";
+    private static final String TITLE = "title";
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference productRef;
 
     private ProductAdapter adapter;
@@ -74,7 +75,7 @@ public class CollectionDetailsActivity extends AppCompatActivity implements Prod
     }
 
     private void setupRecyclerView(String collectionTitle) {
-        Query query = productRef.orderBy("title");
+        Query query = productRef.orderBy(TITLE);
 
         FirestoreRecyclerOptions<Product> options = new FirestoreRecyclerOptions.Builder<Product>()
                 .setQuery(query, Product.class)

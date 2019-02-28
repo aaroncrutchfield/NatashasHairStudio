@@ -11,6 +11,7 @@
 
         <ImageView
             android:id="@+id/iv_product_image"
+            android:contentDescription="@string/product_image"
             style="@style/imageview_store" />
 
         <TextView
@@ -26,6 +27,7 @@
             android:layout_height="24dp"
             android:layout_marginTop="8dp"
             android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:paddingBottom="8dp"
             tools:text="$75 - 125" />
     </LinearLayout>

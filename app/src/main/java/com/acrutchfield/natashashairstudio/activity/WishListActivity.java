@@ -21,11 +21,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class WishListActivity extends AppCompatActivity implements WishListAdapter.WishListInteractionListener {
 
-    public static final String EXTRA_PRODUCT_REF = "productRef";
-    final String WISHLIST_COLLECTION = "/WISHLIST/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/default_list/";
-    CollectionReference wishListRef;
+    private static final String EXTRA_PRODUCT_REF = "productRef";
+    private static final String TITLE = "title";
+    private final String WISHLIST_COLLECTION = "/WISHLIST/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/default_list/";
+    private CollectionReference wishListRef;
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private WishListAdapter adapter;
 
 
@@ -70,7 +71,7 @@ public class WishListActivity extends AppCompatActivity implements WishListAdapt
     }
 
     private void setupRecyclerView() {
-        Query query = wishListRef.orderBy("title");
+        Query query = wishListRef.orderBy(TITLE);
 
         FirestoreRecyclerOptions<Product> options = new FirestoreRecyclerOptions.Builder<Product>()
                 .setQuery(query, Product.class)

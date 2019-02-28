@@ -24,39 +24,20 @@ public class Product {
         return collection;
     }
 
-    public void setCollection(String collection) {
-        this.collection = collection;
-    }
-
     public String getImageUrl() {
         return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
     public Map<String, Integer> getLength() {
         return length;
     }
 
-    public void setLength(Map<String, Integer> length) {
-        this.length = length;
-    }
-
     public String getPriceRange() {
         return priceRange;
-    }
-
-    public void setPriceRange(String priceRange) {
-        this.priceRange = priceRange;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
 }

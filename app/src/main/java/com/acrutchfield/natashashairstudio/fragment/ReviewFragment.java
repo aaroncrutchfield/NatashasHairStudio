@@ -60,8 +60,8 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
 
     private FirebaseUser user;
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference reviewsRef = db.collection("/REVIEWS");
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final CollectionReference reviewsRef = db.collection("/REVIEWS");
 
     private ReviewAdapter adapter;
 
@@ -123,11 +123,6 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
     }
 
     private void promptForReview() {

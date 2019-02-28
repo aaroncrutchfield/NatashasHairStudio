@@ -24,17 +24,17 @@ import androidx.fragment.app.FragmentTransaction;
 public class MainActivity extends AppCompatActivity {
 
 
-    public static final String SELECTED_FRAGMENT = "selected_fragment";
+    private static final String SELECTED_FRAGMENT = "selected_fragment";
     private static final String URL_STRING = "https://app.acuityscheduling.com/schedule.php?owner=11362345";
-    public static final String ACTION_SHOP = "shop";
-    public static final String ACTION_BOOK = "book";
-    public static final String ACTION_REVIEW = "review";
-    public static final String ACTION_SOCIAL = "social";
+    private static final String ACTION_SHOP = "shop";
+    private static final String ACTION_BOOK = "book";
+    private static final String ACTION_REVIEW = "review";
+    private static final String ACTION_SOCIAL = "social";
 
     private FragmentManager fragmentManager;
     private BottomNavigationView navigation;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
                 switch (item.getItemId()) {
                     case R.id.navigation_shop:

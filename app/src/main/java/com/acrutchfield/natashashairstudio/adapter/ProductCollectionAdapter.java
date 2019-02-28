@@ -51,10 +51,10 @@ public class ProductCollectionAdapter extends FirestoreRecyclerAdapter<ProductCo
 
     class ProductCollectionHolder extends RecyclerView.ViewHolder {
 
-        FirebaseStorage storage = FirebaseStorage.getInstance();
+        final FirebaseStorage storage = FirebaseStorage.getInstance();
 
-        ImageView ivCollectionImage;
-        TextView tvCollectionTitle;
+        final ImageView ivCollectionImage;
+        final TextView tvCollectionTitle;
 
 
         ProductCollectionHolder(@NonNull View itemView) {

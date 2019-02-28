@@ -11,6 +11,7 @@
 
         <ImageView
             android:id="@+id/iv_collection_image"
+            android:contentDescription="@string/product_image"
             style="@style/imageview_store" />
 
         <TextView

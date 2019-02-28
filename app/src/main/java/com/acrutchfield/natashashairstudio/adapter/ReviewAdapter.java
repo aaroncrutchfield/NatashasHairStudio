@@ -21,7 +21,7 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
 
 
     private final FirestoreRecyclerOptions<Review> options;
-    private Context context;
+    private final Context context;
 
     public ReviewAdapter(@NonNull FirestoreRecyclerOptions<Review> options, Context context) {
         super(options);
@@ -46,12 +46,12 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
 
         static final String RATING_FORMAT = "%s.0";
 
-        ImageView ivProfile;
-        TextView tvService;
-        TextView tvRating;
-        TextView tvDetails;
-        TextView tvDate;
-        TextView tvClientName;
+        final ImageView ivProfile;
+        final TextView tvService;
+        final TextView tvRating;
+        final TextView tvDetails;
+        final TextView tvDate;
+        final TextView tvClientName;
 
         ReviewHolder(@NonNull View itemView) {
             super(itemView);

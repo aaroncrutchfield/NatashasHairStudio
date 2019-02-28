@@ -33,17 +33,17 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final int REQUEST_SIGN_IN = 0;
     private static final String SIGNED_OUT = "Signed Out";
-    public static final String ACCOUNT_DELETED = "Account Deleted.";
-    public static final String CANCELED = "Canceled.";
-    public static final String TITLE_DELETE_ACCOUNT = "Delete Account";
-    public static final String MESSAGE_DELETE_ACCOUNT = "Are you sure you want to delete your account?";
-    public static final String CONFIRM = "Confirm";
-    public static final String CANCEL = "Cancel";
-    public static final String SIGN_IN_TO_DELETE = "You must be signed in to delete your account";
-    public static final String SIGNED_IN = "Signed In";
-    public static final String REMINDER_SET = "Appointment reminder set for 7 days.";
-    public static final String REMINDER_REMOVED = "Appointment reminder removed.";
-    public static final String COLOR_GREY = "#676767";
+    private static final String ACCOUNT_DELETED = "Account Deleted.";
+    private static final String CANCELED = "Canceled.";
+    private static final String TITLE_DELETE_ACCOUNT = "Delete Account";
+    private static final String MESSAGE_DELETE_ACCOUNT = "Are you sure you want to delete your account?";
+    private static final String CONFIRM = "Confirm";
+    private static final String CANCEL = "Cancel";
+    private static final String SIGN_IN_TO_DELETE = "You must be signed in to delete your account";
+    private static final String SIGNED_IN = "Signed In";
+    private static final String REMINDER_SET = "Appointment reminder set for 7 days.";
+    private static final String REMINDER_REMOVED = "Appointment reminder removed.";
+    private static final String COLOR_GREY = "#676767";
 
     private TextView tvWelcome;
     private TextView tvSignedOut;

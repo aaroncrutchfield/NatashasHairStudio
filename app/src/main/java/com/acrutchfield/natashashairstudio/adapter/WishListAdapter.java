@@ -53,14 +53,14 @@ public class WishListAdapter extends FirestoreRecyclerAdapter<Product, WishListA
 
         final String BASE_REF = "PRODUCT_COLLECTIONS/hair/";
 
-        FirebaseStorage storage = FirebaseStorage.getInstance();
+        final FirebaseStorage storage = FirebaseStorage.getInstance();
 
-        ImageView ivWishListImage;
-        TextView tvWishListCollection;
-        TextView tvWishListProduct;
-        TextView tvWishListPriceRange;
+        final ImageView ivWishListImage;
+        final TextView tvWishListCollection;
+        final TextView tvWishListProduct;
+        final TextView tvWishListPriceRange;
 
-        public WishListHolder(@NonNull View itemView) {
+        WishListHolder(@NonNull View itemView) {
             super(itemView);
 
             ivWishListImage = itemView.findViewById(R.id.iv_wish_list);
@@ -69,7 +69,7 @@ public class WishListAdapter extends FirestoreRecyclerAdapter<Product, WishListA
             tvWishListPriceRange = itemView.findViewById(R.id.tv_wish_list_price_range);
         }
 
-        public void onBindProduct(Product product) {
+        void onBindProduct(Product product) {
             tvWishListProduct.setText(product.getTitle());
             tvWishListPriceRange.setText(product.getPriceRange());
             tvWishListCollection.setText(product.getCollection());

@@ -15,16 +15,16 @@ import com.acrutchfield.natashashairstudio.activity.MainActivity;
  */
 public class LauncherAppWidget extends AppWidgetProvider {
 
-    public static final String ACTION_SHOP = "shop";
-    public static final String ACTION_BOOK = "book";
-    public static final String ACTION_REVIEW = "review";
-    public static final String ACTION_SOCIAL = "social";
-    public static final int RC_SHOP = 101;
-    public static final int RC_BOOK = 102;
-    public static final int RC_REVIEW = 103;
-    public static final int RC_SOCIAL = 104;
+    private static final String ACTION_SHOP = "shop";
+    private static final String ACTION_BOOK = "book";
+    private static final String ACTION_REVIEW = "review";
+    private static final String ACTION_SOCIAL = "social";
+    private static final int RC_SHOP = 101;
+    private static final int RC_BOOK = 102;
+    private static final int RC_REVIEW = 103;
+    private static final int RC_SOCIAL = 104;
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+    private static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
         // Construct the RemoteViews object

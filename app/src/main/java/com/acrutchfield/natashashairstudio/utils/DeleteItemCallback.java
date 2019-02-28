@@ -24,8 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 public class DeleteItemCallback extends ItemTouchHelper.SimpleCallback {
 
     private static final String COLOR_RED = "#f44336";
-    private Context context;
-    private DeletePromptInterface promptInterface;
+    private final Context context;
+    private final DeletePromptInterface promptInterface;
 
     public interface DeletePromptInterface {
         void promptForDelete(String uid, String id, int position);

@@ -36,19 +36,19 @@ import androidx.appcompat.widget.Toolbar;
 
 public class ProductDetailsActivity extends AppCompatActivity {
 
-    public static final String EXTRA_PRODUCT_REF = "productRef";
-    public static final String WISHLIST = "/WISHLIST/";
-    public static final String DEFAULT_LIST = "/default_list/";
-    public static final String LOG_IN_FIRST = "You must log in first.";
-    public static final String ADDED_TO_WISH_LIST = "Added to wish list";
-    public static final String TRY_AGAIN = "Error. Try again later";
-    public static final String FORMAT_MONEY = "$%s.00";
+    private static final String EXTRA_PRODUCT_REF = "productRef";
+    private static final String WISHLIST = "/WISHLIST/";
+    private static final String DEFAULT_LIST = "/default_list/";
+    private static final String LOG_IN_FIRST = "You must log in first.";
+    private static final String ADDED_TO_WISH_LIST = "Added to wish list";
+    private static final String TRY_AGAIN = "Error. Try again later";
+    private static final String FORMAT_MONEY = "$%s.00";
 
-    FirebaseStorage storage = FirebaseStorage.getInstance();
+    private final FirebaseStorage storage = FirebaseStorage.getInstance();
 
-    FirebaseAuth auth;
+    private FirebaseAuth auth;
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private ImageView ivDetailImage;
     private TextView tvCollectionTitle;

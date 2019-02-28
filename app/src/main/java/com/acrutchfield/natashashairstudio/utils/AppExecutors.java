@@ -1,12 +1,7 @@
 package com.acrutchfield.natashashairstudio.utils;
 
-import android.os.Handler;
-import android.os.Looper;
-
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-
-import androidx.annotation.NonNull;
 
 
 // https://github.com/udacity/ud851-Exercises/blob/student/Lesson09b-ToDo-List-AAC/
@@ -35,14 +30,5 @@ public class AppExecutors {
 
     public Executor diskIO() {
         return diskIO;
-    }
-
-    private static class MainThreadExecutor implements Executor {
-        private Handler mainThreadHandler = new Handler(Looper.getMainLooper());
-
-        @Override
-        public void execute(@NonNull Runnable command) {
-            mainThreadHandler.post(command);
-        }
     }
 }
