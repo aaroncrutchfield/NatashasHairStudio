@@ -45,4 +45,10 @@ public class AppointmentReminderUtils {
         sInitialized = true;
     }
 
+    synchronized public static void cancelAppointmentReminder(Context context) {
+        Driver driver = new GooglePlayDriver(context);
+        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(driver);
+
+        dispatcher.cancel(REMINDER_JOB_TAG);
+    }
 }

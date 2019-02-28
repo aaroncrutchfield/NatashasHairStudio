@@ -75,17 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         Button btnSignInGoogle = findViewById(R.id.btn_sign_in_google);
         ivLoginPicture = findViewById(R.id.iv_login_picture);
         ivPictureOutline = findViewById(R.id.iv_picture_outline);
-        Switch swAppointmentReminder = findViewById(R.id.sw_appointment_reminder);
-
-        swAppointmentReminder.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            SharedPrefs.setReminder(this, isChecked);
-
-            if (isChecked) {
-                Toast.makeText(LoginActivity.this, REMINDER_SET, Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(LoginActivity.this, REMINDER_REMOVED, Toast.LENGTH_SHORT).show();
-            }
-        });
+        setupReminderSwitch();
 
         btnSignInGoogle.setOnClickListener(v -> signIn());
         tvSignOut.setOnClickListener(v -> signOut());
@@ -103,6 +93,23 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             signedOutUI();
         }
+    }
+
+    private void setupReminderSwitch() {
+        Switch swAppointmentReminder = findViewById(R.id.sw_appointment_reminder);
+
+        // Restore checked state before setting the listener
+        if (SharedPrefs.getReminder(this)) swAppointmentReminder.setChecked(true);
+
+        swAppointmentReminder.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            SharedPrefs.setReminder(this, isChecked);
+
+            if (isChecked) {
+                Toast.makeText(LoginActivity.this, REMINDER_SET, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(LoginActivity.this, REMINDER_REMOVED, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void signedOutUI() {

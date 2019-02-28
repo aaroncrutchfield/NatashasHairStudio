@@ -7,6 +7,7 @@ import android.os.PersistableBundle;
 import com.acrutchfield.natashashairstudio.R;
 import com.acrutchfield.natashashairstudio.utils.AppointmentReminderTask;
 import com.acrutchfield.natashashairstudio.utils.AppointmentReminderUtils;
+import com.acrutchfield.natashashairstudio.utils.SharedPrefs;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -74,7 +75,12 @@ public class MainActivity extends AppCompatActivity {
             navigation.setSelectedItemId(R.id.navigation_shop);
         }
 
-        AppointmentReminderUtils.scheduleAppointmentReminder(this);
+        if (SharedPrefs.getReminder(this)) {
+            AppointmentReminderUtils.scheduleAppointmentReminder(this);
+        } else {
+            // TODO: 2/28/19 debug cancellations to reassure no errors
+            AppointmentReminderUtils.cancelAppointmentReminder(this);
+        }
 
         handleIntent();
 
