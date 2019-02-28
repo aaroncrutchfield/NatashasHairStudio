@@ -26,6 +26,10 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String SELECTED_FRAGMENT = "selected_fragment";
     private static final String URL_STRING = "https://app.acuityscheduling.com/schedule.php?owner=11362345";
+    public static final String ACTION_SHOP = "shop";
+    public static final String ACTION_BOOK = "book";
+    public static final String ACTION_REVIEW = "review";
+    public static final String ACTION_SOCIAL = "social";
 
     private FragmentManager fragmentManager;
     private BottomNavigationView navigation;
@@ -92,17 +96,17 @@ public class MainActivity extends AppCompatActivity {
             String action = intent.getAction();
             assert action != null;
             switch (action) {
-                case "shop":
+                case ACTION_SHOP:
                     navigation.setSelectedItemId(R.id.navigation_shop);
                     break;
-                case "book":
+                case ACTION_BOOK:
                 case AppointmentReminderTask.ACTION_APPOINTMENT_REMINDER:
                     navigation.setSelectedItemId(R.id.navigation_book);
                     break;
-                case "review":
+                case ACTION_REVIEW:
                     navigation.setSelectedItemId(R.id.navigation_review);
                     break;
-                case "social":
+                case ACTION_SOCIAL:
                     navigation.setSelectedItemId(R.id.navigation_social);
                     break;
             }
