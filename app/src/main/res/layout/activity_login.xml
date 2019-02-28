@@ -34,16 +34,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_login_picture" />
 
+    <Button
+        android:id="@+id/btn_view_wish_list"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/view_wish_list"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@color/grey"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/btn_sign_in_google"
+        app:layout_constraintStart_toStartOf="@+id/btn_sign_in_google"
+        app:layout_constraintTop_toBottomOf="@+id/btn_sign_in_google" />
+
     <ImageView
         android:id="@+id/iv_picture_outline"
         android:layout_width="128dp"
         android:layout_height="128dp"
+        android:contentDescription="@string/picture_outline"
         app:layout_constraintBottom_toBottomOf="@+id/iv_login_picture"
         app:layout_constraintEnd_toEndOf="@+id/iv_login_picture"
         app:layout_constraintStart_toStartOf="@+id/iv_login_picture"
         app:layout_constraintTop_toTopOf="@+id/iv_login_picture"
-        app:srcCompat="@android:color/black"
-        android:contentDescription="@string/picture_outline" />
+        app:srcCompat="@android:color/black" />
 
     <ImageView
         android:id="@+id/iv_login_picture"
@@ -52,11 +67,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
+        android:contentDescription="@string/login_picture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_username"
-        app:srcCompat="@color/browser_actions_title_color"
-        android:contentDescription="@string/login_picture" />
+        app:srcCompat="@color/browser_actions_title_color" />
 
     <TextView
         android:id="@+id/tv_username"
@@ -114,5 +129,17 @@
         app:layout_constraintBottom_toTopOf="@+id/iv_login_picture"
         app:layout_constraintEnd_toEndOf="@+id/iv_login_picture"
         app:layout_constraintStart_toStartOf="@+id/iv_login_picture" />
+
+    <Switch
+        android:id="@+id/sw_appointment_reminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Appointment Reminder (7 days)"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@android:color/primary_text_dark"
+        app:layout_constraintEnd_toEndOf="@+id/btn_view_wish_list"
+        app:layout_constraintStart_toStartOf="@+id/btn_view_wish_list"
+        app:layout_constraintTop_toBottomOf="@+id/btn_view_wish_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

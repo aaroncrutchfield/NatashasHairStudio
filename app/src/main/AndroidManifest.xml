@@ -9,6 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name=".utils.AppointmentReminderIntentService"
+            android:exported="false"/>
+        <service android:name=".utils.AppointmentFirebaseJobService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECTUTE"/>
+            </intent-filter>
+        </service>
+
         <receiver android:name=".ui.LauncherAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -21,7 +31,7 @@
 
         <activity
             android:name=".ui.LoginActivity"
-            android:parentActivityName=".ui.MainActivity"/>
+            android:parentActivityName=".ui.MainActivity" />
         <activity android:name=".ui.ProductDetailsActivity" />
         <activity android:name=".ui.CollectionDetailsActivity" />
         <activity

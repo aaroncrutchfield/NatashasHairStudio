@@ -8,10 +8,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.acrutchfield.natashashairstudio.R;
+import com.acrutchfield.natashashairstudio.utils.SharedPrefs;
 import com.bumptech.glide.request.RequestOptions;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
     public static final String CANCEL = "Cancel";
     public static final String SIGN_IN_TO_DELETE = "You must be signed in to delete your account";
     public static final String SIGNED_IN = "Signed In";
+    public static final String REMINDER_SET = "Appointment reminder set for 7 days.";
+    public static final String REMINDER_REMOVED = "Appointment reminder removed.";
 
     private TextView tvWelcome;
     private TextView tvSignedOut;
@@ -71,6 +75,17 @@ public class LoginActivity extends AppCompatActivity {
         Button btnSignInGoogle = findViewById(R.id.btn_sign_in_google);
         ivLoginPicture = findViewById(R.id.iv_login_picture);
         ivPictureOutline = findViewById(R.id.iv_picture_outline);
+        Switch swAppointmentReminder = findViewById(R.id.sw_appointment_reminder);
+
+        swAppointmentReminder.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            SharedPrefs.setReminder(this, isChecked);
+
+            if (isChecked) {
+                Toast.makeText(LoginActivity.this, REMINDER_SET, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(LoginActivity.this, REMINDER_REMOVED, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         btnSignInGoogle.setOnClickListener(v -> signIn());
         tvSignOut.setOnClickListener(v -> signOut());
