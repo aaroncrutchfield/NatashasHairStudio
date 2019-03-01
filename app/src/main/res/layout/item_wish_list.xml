@@ -13,7 +13,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:color/black"
-        style="@style/small_image_view" />
+        style="@style/small_image_view"
+        android:contentDescription="@string/product_image" />
 
     <include
         android:id="@+id/in_info_wish_list"
