@@ -47,4 +47,21 @@
         <item>Wig Install</item>
     </string-array>
     <string name="reminder_7_days">Appointment Reminder (7 days)</string>
+
+    <!--Actions-->
+    <string name="action_social">social</string>
+    <string name="action_shop">shop</string>
+    <string name="action_book">book</string>
+    <string name="action_review">review</string>
+
+    <!--Wireless Alert Dialog-->
+    <string name="title_offline">Offline</string>
+    <string name="message_network_warning">You must be online to use this app.</string>
+    <string name="button_network_settings">Network Settings</string>
+    <string name="button_exit">Exit</string>
+    <string name="toast_try_again">Please connect to a network and try again later.</string>
+
+
+    <string name="url_string">https://app.acuityscheduling.com/schedule.php?owner=11362345</string>
+    <string name="key_selected_fragment">selected_fragment</string>
 </resources>
