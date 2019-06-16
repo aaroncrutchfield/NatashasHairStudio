@@ -65,11 +65,10 @@
     <string name="url_string">https://app.acuityscheduling.com/schedule.php?owner=11362345</string>
     <string name="key_selected_fragment">selected_fragment</string>
 
-
+    <!--LoginActivity communication-->
     <string name="toast_signed_out">Signed Out</string>
     <string name="toast_account_deleted">Account Deleted.</string>
     <string name="toast_canceled">Canceled.</string>
-
     <string name="title_delete_account">Delete Account</string>
     <string name="message_confirm_delete">Are you sure you want to delete your account?</string>
     <string name="button_confirm">Confirm</string>
