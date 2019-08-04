@@ -1,4 +1,4 @@
-package com.acrutchfield.natashashairstudio.fragment;
+package com.acrutchfield.natashashairstudio.shop;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,20 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.acrutchfield.natashashairstudio.R;
-import com.acrutchfield.natashashairstudio.activity.CollectionDetailsActivity;
-import com.acrutchfield.natashashairstudio.adapter.ProductCollectionAdapter;
-import com.acrutchfield.natashashairstudio.model.ProductCollection;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.acrutchfield.natashashairstudio.R;
+import com.acrutchfield.natashashairstudio.model.ProductCollection;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 public class ShopFragment extends Fragment implements ProductCollectionAdapter.CollectionInteractionListener {
 

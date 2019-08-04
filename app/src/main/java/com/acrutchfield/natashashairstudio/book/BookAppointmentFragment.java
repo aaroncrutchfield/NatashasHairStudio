@@ -1,4 +1,4 @@
-package com.acrutchfield.natashashairstudio.fragment;
+package com.acrutchfield.natashashairstudio.book;
 
 
 import android.os.Bundle;
@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import com.acrutchfield.natashashairstudio.R;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import com.acrutchfield.natashashairstudio.R;
 
 
 public class BookAppointmentFragment extends Fragment {

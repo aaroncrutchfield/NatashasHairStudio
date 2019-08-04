@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.WishListActivity"
+        <activity android:name=".profile.WishListActivity"
             android:screenOrientation="portrait"/>
 
         <service
@@ -34,12 +34,12 @@
         </receiver>
 
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".profile.LoginActivity"
             android:parentActivityName=".activity.MainActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ProductDetailsActivity"
+        <activity android:name=".shop.ProductDetailsActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".activity.CollectionDetailsActivity"
+        <activity android:name=".shop.CollectionDetailsActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.MainActivity"

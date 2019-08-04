@@ -1,11 +1,15 @@
-package com.acrutchfield.natashashairstudio.adapter;
+package com.acrutchfield.natashashairstudio.review;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.acrutchfield.natashashairstudio.R;
 import com.acrutchfield.natashashairstudio.model.Review;
@@ -14,19 +18,27 @@ import com.bumptech.glide.request.RequestOptions;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapter.ReviewHolder> {
 
 
     private final FirestoreRecyclerOptions<Review> options;
     private final Context context;
+    private DeletePromptInterface promptInterface;
+    private String uid;
 
-    public ReviewAdapter(@NonNull FirestoreRecyclerOptions<Review> options, Context context) {
+    public interface DeletePromptInterface {
+        void promptForDelete(String id, int position);
+    }
+
+    public ReviewAdapter(@NonNull FirestoreRecyclerOptions<Review> options, Context context, DeletePromptInterface promptInterface) {
         super(options);
         this.options = options;
         this.context = context;
+        this.promptInterface = promptInterface;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     @Override
@@ -46,6 +58,7 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
 
         static final String RATING_FORMAT = "%s.0";
 
+        final ImageButton ivOptionButton;
         final ImageView ivProfile;
         final TextView tvService;
         final TextView tvRating;
@@ -57,6 +70,7 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
             super(itemView);
 
             ivProfile = itemView.findViewById(R.id.iv_profile);
+            ivOptionButton = itemView.findViewById(R.id.iv_option_button);
             tvService = itemView.findViewById(R.id.tv_review_service);
             tvRating = itemView.findViewById(R.id.tv_review_rating);
             tvDetails = itemView.findViewById(R.id.tv_review_details);
@@ -75,7 +89,15 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<Review, ReviewAdapte
             // Set id to tag on itemView to assist with delete
             String id = options.getSnapshots().getSnapshot(position).getId();
             itemView.setTag(R.string.id, id);
-            itemView.setTag(R.string.uid, review.getUid());
+
+            ivOptionButton.setOnClickListener(v -> {
+                promptInterface.promptForDelete(id, position);
+            });
+
+            if (review.getUid().equals(uid))
+                ivOptionButton.setVisibility(View.VISIBLE);
+            else
+                ivOptionButton.setVisibility(View.INVISIBLE);
 
             GlideApp.with(context)
                     .load(review.getPhotoUrl())

@@ -1,4 +1,4 @@
-package com.acrutchfield.natashashairstudio.fragment;
+package com.acrutchfield.natashashairstudio.social;
 
 
 import android.content.ActivityNotFoundException;
@@ -11,12 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import com.acrutchfield.natashashairstudio.R;
 
 import java.util.Objects;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 
 
 public class SocialFragment extends Fragment {

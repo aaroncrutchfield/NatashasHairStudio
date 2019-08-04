@@ -1,22 +1,21 @@
-package com.acrutchfield.natashashairstudio.activity;
+package com.acrutchfield.natashashairstudio.shop;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-
-import com.acrutchfield.natashashairstudio.R;
-import com.acrutchfield.natashashairstudio.adapter.ProductAdapter;
-import com.acrutchfield.natashashairstudio.model.Product;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.acrutchfield.natashashairstudio.R;
+import com.acrutchfield.natashashairstudio.model.Product;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 public class CollectionDetailsActivity extends AppCompatActivity implements ProductAdapter.ProductInteractionLister {
 

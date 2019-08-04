@@ -7,23 +7,24 @@ import android.os.PersistableBundle;
 import android.provider.Settings;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.acrutchfield.natashashairstudio.R;
-import com.acrutchfield.natashashairstudio.fragment.BookAppointmentFragment;
-import com.acrutchfield.natashashairstudio.fragment.ReviewFragment;
-import com.acrutchfield.natashashairstudio.fragment.ShopFragment;
-import com.acrutchfield.natashashairstudio.fragment.SocialFragment;
+import com.acrutchfield.natashashairstudio.book.BookAppointmentFragment;
+import com.acrutchfield.natashashairstudio.profile.LoginActivity;
+import com.acrutchfield.natashashairstudio.review.ReviewFragment;
+import com.acrutchfield.natashashairstudio.shop.ShopFragment;
+import com.acrutchfield.natashashairstudio.social.SocialFragment;
 import com.acrutchfield.natashashairstudio.utils.AppointmentReminderTask;
 import com.acrutchfield.natashashairstudio.utils.AppointmentReminderUtils;
 import com.acrutchfield.natashashairstudio.utils.SharedPrefs;
 import com.acrutchfield.natashashairstudio.utils.Utils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 public class MainActivity extends AppCompatActivity {
 

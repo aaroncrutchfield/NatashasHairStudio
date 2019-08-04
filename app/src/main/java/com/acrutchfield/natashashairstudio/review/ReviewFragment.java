@@ -1,4 +1,4 @@
-package com.acrutchfield.natashashairstudio.fragment;
+package com.acrutchfield.natashashairstudio.review;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -12,11 +12,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.acrutchfield.natashashairstudio.R;
-import com.acrutchfield.natashashairstudio.adapter.ReviewAdapter;
 import com.acrutchfield.natashashairstudio.model.Review;
-import com.acrutchfield.natashashairstudio.utils.DeleteItemCallback;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,15 +36,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-public class ReviewFragment extends Fragment implements DeleteItemCallback.DeletePromptInterface {
+public class ReviewFragment extends Fragment implements ReviewAdapter.DeletePromptInterface {
 
     private static final String REVIEW_DELETED = "Your review was deleted.";
     private static final String REVIEW_ERROR = "Error. Your review could not be deleted.";
@@ -92,6 +90,8 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
 
         });
 
+
+
         return view;
     }
 
@@ -114,17 +114,16 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
                 .setQuery(query, Review.class)
                 .build();
 
-        adapter = new ReviewAdapter(options, getContext());
-
-        ItemTouchHelper.SimpleCallback simpleCallback =
-                new DeleteItemCallback(getContext(), this, 0, ItemTouchHelper.LEFT);
+        // TODO: 2019-06-16 Pass in UID
+        user = auth.getCurrentUser();
+        String uid = "";
+        if (user != null) uid = user.getUid();
+        adapter = new ReviewAdapter(options, getContext(), this);
+        adapter.setUid(uid);
 
         RecyclerView recyclerView = view.findViewById(R.id.rv_reviews);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     private void promptForReview() {
@@ -225,38 +224,38 @@ public class ReviewFragment extends Fragment implements DeleteItemCallback.Delet
 
 
     @Override
-    public void promptForDelete(String uid, String id, int position) {
+    public void promptForDelete(String id, int position) {
 
-        user = auth.getCurrentUser();
+        View dialogView = getLayoutInflater().inflate(R.layout.bottom_sheet, null);
+        BottomSheetDialog dialog = new BottomSheetDialog(getContext());
+        dialog.setContentView(dialogView);
+        dialog.show();
 
-        if (user != null) {
-            AlertDialog.Builder builder;
-            if (user.getUid().equals(uid)) {
-                builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()))
-                        .setTitle(REVIEW_DELETE_TITLE)
-                        .setMessage(REVIEW_CONFIRM_DELETE)
-                        .setPositiveButton(CONFIRM, (dialog, which) -> reviewsRef.document(id).delete().addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                adapter.notifyItemRemoved(position);
-                                adapter.notifyDataSetChanged();
-                                notifyUser(REVIEW_DELETED);
-
-                            } else {
-                                notifyUser(REVIEW_ERROR);
-                            }
-                        }))
-                        .setNegativeButton(CANCEL, (dialog, which) -> {
-                            adapter.notifyDataSetChanged();
-                            notifyUser(REVIEW_DELETE_CANCELED);
-                        });
-                builder.create().show();
-            } else {
-                adapter.notifyDataSetChanged();
-                notifyUser(REVIEW_NOT_YOURS);
-            }
-        } else {
-            Toast.makeText(getContext(), LOG_IN_FIRST, Toast.LENGTH_SHORT).show();
-            adapter.notifyDataSetChanged();
-        }
+//        user = auth.getCurrentUser();
+//
+//        if (user != null) {
+//            AlertDialog.Builder builder;
+//                builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()))
+//                        .setTitle(REVIEW_DELETE_TITLE)
+//                        .setMessage(REVIEW_CONFIRM_DELETE)
+//                        .setPositiveButton(CONFIRM, (dialog, which) -> reviewsRef.document(id).delete().addOnCompleteListener(task -> {
+//                            if (task.isSuccessful()) {
+//                                adapter.notifyItemRemoved(position);
+//                                adapter.notifyDataSetChanged();
+//                                notifyUser(REVIEW_DELETED);
+//
+//                            } else {
+//                                notifyUser(REVIEW_ERROR);
+//                            }
+//                        }))
+//                        .setNegativeButton(CANCEL, (dialog, which) -> {
+//                            adapter.notifyDataSetChanged();
+//                            notifyUser(REVIEW_DELETE_CANCELED);
+//                        });
+//                builder.create().show();
+//        } else {
+//            Toast.makeText(getContext(), LOG_IN_FIRST, Toast.LENGTH_SHORT).show();
+//            adapter.notifyDataSetChanged();
+//        }
     }
 }

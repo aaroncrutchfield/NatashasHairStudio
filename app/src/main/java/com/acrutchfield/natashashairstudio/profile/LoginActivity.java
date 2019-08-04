@@ -1,4 +1,4 @@
-package com.acrutchfield.natashashairstudio.activity;
+package com.acrutchfield.natashashairstudio.profile;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,6 +12,12 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.acrutchfield.natashashairstudio.R;
 import com.acrutchfield.natashashairstudio.utils.GlideApp;
 import com.acrutchfield.natashashairstudio.utils.SharedPrefs;
@@ -22,12 +28,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 public class LoginActivity extends AppCompatActivity {
 

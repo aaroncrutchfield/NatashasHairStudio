@@ -1,23 +1,23 @@
-package com.acrutchfield.natashashairstudio.activity;
+package com.acrutchfield.natashashairstudio.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-
-import com.acrutchfield.natashashairstudio.R;
-import com.acrutchfield.natashashairstudio.adapter.WishListAdapter;
-import com.acrutchfield.natashashairstudio.model.Product;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.acrutchfield.natashashairstudio.R;
+import com.acrutchfield.natashashairstudio.model.Product;
+import com.acrutchfield.natashashairstudio.shop.ProductDetailsActivity;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 public class WishListActivity extends AppCompatActivity implements WishListAdapter.WishListInteractionListener {
 

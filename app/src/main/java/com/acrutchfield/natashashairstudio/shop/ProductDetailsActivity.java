@@ -1,4 +1,4 @@
-package com.acrutchfield.natashashairstudio.activity;
+package com.acrutchfield.natashashairstudio.shop;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,10 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.acrutchfield.natashashairstudio.R;
 import com.acrutchfield.natashashairstudio.model.Product;
@@ -28,10 +32,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 public class ProductDetailsActivity extends AppCompatActivity {
 
