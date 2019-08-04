@@ -1,6 +1,7 @@
 package com.acrutchfield.natashashairstudio.review;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,7 @@ public class ReviewFragment extends Fragment implements ReviewAdapter.DeleteProm
     private static final String MESSAGE_CANCELED = "Canceled";
     private static final String ADD_DETAILS = "Please add details before submitting";
     private static final String LOG_IN_FIRST = "You must log in first";
+    private Context context;
 
     private ReviewAdapter adapter;
 
@@ -52,6 +54,7 @@ public class ReviewFragment extends Fragment implements ReviewAdapter.DeleteProm
 
         FloatingActionButton fabAddReview = view.findViewById(R.id.fab_add_review);
 
+        context = getContext();
         presenter = new ReviewPresenter(this);
         setupRecyclerView(view);
 
@@ -81,11 +84,11 @@ public class ReviewFragment extends Fragment implements ReviewAdapter.DeleteProm
                 .build();
 
         String uid = presenter.getUid();
-        adapter = new ReviewAdapter(options, getContext(), this);
+        adapter = new ReviewAdapter(options, context, this);
         adapter.setUid(uid);
 
         RecyclerView recyclerView = view.findViewById(R.id.rv_reviews);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
     }
 
@@ -124,16 +127,16 @@ public class ReviewFragment extends Fragment implements ReviewAdapter.DeleteProm
 
     @Override
     public void notifyUser(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
     private void setupDialogSpinners(Spinner spRating, Spinner spService) {
         ArrayAdapter<CharSequence> ratingAdapter = ArrayAdapter.createFromResource(
-                Objects.requireNonNull(getContext()), R.array.ratings_array, android.R.layout.simple_spinner_item);
+                Objects.requireNonNull(context), R.array.ratings_array, android.R.layout.simple_spinner_item);
         spRating.setAdapter(ratingAdapter);
 
         ArrayAdapter<CharSequence> serviceAdapter = ArrayAdapter.createFromResource(
-                Objects.requireNonNull(getContext()), R.array.ratings_services, android.R.layout.simple_spinner_item);
+                Objects.requireNonNull(context), R.array.ratings_services, android.R.layout.simple_spinner_item);
         spService.setAdapter(serviceAdapter);
 
         spRating.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -168,7 +171,7 @@ public class ReviewFragment extends Fragment implements ReviewAdapter.DeleteProm
     public void promptForDelete(String id, int position) {
 
         View dialogView = getLayoutInflater().inflate(R.layout.bottom_sheet, null);
-        BottomSheetDialog dialog = new BottomSheetDialog(getContext());
+        BottomSheetDialog dialog = new BottomSheetDialog(context);
         dialog.setContentView(dialogView);
         dialog.show();
 
