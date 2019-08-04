@@ -27,13 +27,11 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements LoginContract.ViewInterface {
 
     private static final int REQUEST_SIGN_IN = 0;
     private static final String SIGNED_OUT = "Signed Out";
-    private static final String ACCOUNT_DELETED = "Account Deleted.";
     private static final String CANCELED = "Canceled.";
     private static final String TITLE_DELETE_ACCOUNT = "Delete Account";
     private static final String MESSAGE_DELETE_ACCOUNT = "Are you sure you want to delete your account?";
@@ -50,7 +48,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextView tvUsername;
     private ImageView ivLoginPicture;
     private ImageView ivPictureOutline;
-    private FirebaseAuth auth;
+
+    LoginPresenter presenter;
 
 
     @Override
@@ -66,7 +65,6 @@ public class LoginActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
 
-        auth = FirebaseAuth.getInstance();
 
         tvWelcome = findViewById(R.id.tv_welcome_title);
         tvSignedOut = findViewById(R.id.tv_signed_out);
@@ -80,6 +78,8 @@ public class LoginActivity extends AppCompatActivity {
         ivPictureOutline = findViewById(R.id.iv_picture_outline);
         setupReminderSwitch();
 
+        presenter = new LoginPresenter(this);
+
         btnSignInGoogle.setOnClickListener(v -> signIn());
         btnViewWishList.setOnClickListener(v -> launchWishList());
         tvSignOut.setOnClickListener(v -> signOut());
@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, SIGN_IN_TO_DELETE, Toast.LENGTH_SHORT).show();
         });
 
-        if (auth.getCurrentUser() != null) {
+        if (presenter.isLoggedIn()) {
             // Update UI
             signedInUI();
         } else {
@@ -146,13 +146,12 @@ public class LoginActivity extends AppCompatActivity {
         tvSignedOut.setVisibility(View.INVISIBLE);
         tvWelcome.setVisibility(View.VISIBLE);
 
-        tvUsername.setText(Objects.requireNonNull(
-                auth.getCurrentUser()).getDisplayName());
+        tvUsername.setText(presenter.getUserDisplayName());
         tvUsername.setVisibility(View.VISIBLE);
 
 
         GlideApp.with(this)
-                .load(Objects.requireNonNull(auth.getCurrentUser()).getPhotoUrl())
+                .load(presenter.getUserPhotoUrl())
                 .apply(RequestOptions.circleCropTransform())
                 .into(ivLoginPicture);
 
@@ -194,18 +193,11 @@ public class LoginActivity extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setTitle(TITLE_DELETE_ACCOUNT)
                 .setMessage(MESSAGE_DELETE_ACCOUNT)
-                .setPositiveButton(CONFIRM, (dialog, which) -> deleteAccount())
+                .setPositiveButton(CONFIRM, (dialog, which) -> presenter.deleteAccount(this))
                 .setNegativeButton(CANCEL, (dialog, which) ->
                         Toast.makeText(LoginActivity.this, CANCELED, Toast.LENGTH_SHORT).show())
                 .create()
                 .show();
-    }
-
-    private void deleteAccount() {
-        AuthUI.getInstance()
-                .delete(this)
-                .addOnCompleteListener(task ->
-                        Toast.makeText(LoginActivity.this, ACCOUNT_DELETED, Toast.LENGTH_SHORT).show());
     }
 
     @Override
@@ -227,5 +219,10 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void notifyUser(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
